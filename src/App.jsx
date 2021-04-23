@@ -1,45 +1,139 @@
-import './App.css';
+import React, { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useWeb3React } from '@web3-react/core';
 
-function App() {
+import { Normalize } from 'styled-normalize';
+import styled, { createGlobalStyle } from 'styled-components';
+
+import { useEagerConnect, useInactiveListener } from './app/web3';
+import { getAccountDataRequest } from './app/store/slices/web3';
+
+import routes from './app/routes';
+import NotFound from './app/pages/404';
+import Header from './app/components/header';
+import Footer from './app/components/footer';
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  const triedEager = useEagerConnect();
+  useInactiveListener(!triedEager);
+
+  const { account, library } = useWeb3React();
+
+  useEffect(() => {
+    if (!!account && !!library) {
+      dispatch(getAccountDataRequest({ account, library }));
+    }
+  }, [dispatch, account, library]);
+
   return (
-    <div className="h-screen">
-      <header className="text-gray-600 body-font">
-        <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-            <span className="ml-3 text-xl">Tailblocks</span>
-          </a>
-          <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-            <a className="mr-5 hover:text-gray-900">First Link</a>
-            <a className="mr-5 hover:text-gray-900">Second Link</a>
-            <a className="mr-5 hover:text-gray-900">Third Link</a>
-            <a className="mr-5 hover:text-gray-900">Fourth Link</a>
-          </nav>
-          <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-            Button
-          </button>
-        </div>
-      </header>
-
-      <div className="container pt-16 md:pt-32 m-auto flex flex-wrap flex-col md:flex-row items-center">
-        <div className="flex flex-col w-1/2 justify-center items-start overflow-y-hidden">
-          <h1 className="my-4 text-5xl lg:text-6xl text-blue text-left">
-            NFT assets collateralized lending and rent protocol on Ethereum
-          </h1>
-          <div className="flex flex-row space-x-4 py-5"></div>
-        </div>
-      </div>
-      <footer className="container flex py-8 mx-auto">
-        <div className="flex flex-grow space-x-4">
-          <p className="text-black text-opacity-80">Github</p>
-          <p className="text-black text-opacity-80">Twitter</p>
-          <p className="text-black text-opacity-80">Medium</p>
-          <p className="text-black text-opacity-80">Discord</p>
-        </div>
-
-        <p className="text-black">&copy; Unfold.finance 2021</p>
-      </footer>
-    </div>
+    <Wrapper>
+      <Normalize />
+      <GlobalStyle />
+      <Container>
+        {/* <NotificationContainer>
+          <Notifications />
+        </NotificationContainer> */}
+        <Header />
+        <Content>
+          <Switch>
+            {routes.map((route, index) => (
+              <Route key={index} {...route} />
+            ))}
+            <Route component={NotFound} />
+          </Switch>
+        </Content>
+        <Footer />
+      </Container>
+    </Wrapper>
   );
-}
+};
+const GlobalStyle = createGlobalStyle`
+    * {
+        font-family: "Inter", sans-serif;
+        font-display: swap;
+        font-size: 100%;
+        color: #0E1239;
+    }
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+
+    }
+    body {
+      margin: 0;
+      font-size: 100%;
+      line-height: 1;
+      background-color: white;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    a {
+      text-decoration: none;
+    }
+
+    @media (max-width: 48rem) {
+      body {
+        font-size: 0.875rem;
+      }
+    }
+`;
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  max-width: 77.5rem;
+  min-width: 23.4375rem;
+  margin: 0 auto;
+`;
+
+const Container = styled.div`
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  margin: 0 1.25rem;
+
+  @media (max-width: 48rem) {
+    margin: 0 0.625rem;
+  }
+`;
+
+const Content = styled.main`
+  display: flex;
+`;
 
 export default App;

@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ethers } from 'ethers';
+import { Web3ReactProvider } from '@web3-react/core';
+
 import './index.css';
 import App from './App';
+
+import createStore from './app/store';
+
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const getLibrary = (provider) => {
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = 8000;
+  return library;
+};
+
+const store = createStore();
+
+ReactDOM.hydrate(
+  <Provider store={store}>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Web3ReactProvider>
+  </Provider>,
   document.getElementById('root'),
 );
 
