@@ -37,12 +37,7 @@ const FooterComponent = () => (
       >
         Discord
       </SocialLink>
-
-      <Footer.Copy>&copy; 2021 Unfold.finance</Footer.Copy>
     </Footer.SocRow>
-    <Footer.DocsRow>
-      <LinkWrapper to="/tos">Terms of Service</LinkWrapper>
-    </Footer.DocsRow>
   </Footer.Container>
 );
 
@@ -54,7 +49,6 @@ const Footer = {
 
     box-sizing: border-box;
     padding: 1.25rem 0 1.25rem 0;
-    margin-top: 1.25rem;
     opacity: 0.8;
 
     @media (max-width: 48rem) {

@@ -5,7 +5,7 @@ const primaryColor = '#4B58DF';
 
 const StyledButton = styled.button`
   box-sizing: border-box;
-  padding: 0.5rem 1.875rem;
+  padding: 8px 16px;
 
   border: unset;
   border-radius: 0.375rem;
@@ -17,23 +17,25 @@ const StyledButton = styled.button`
   font-weight: 400;
   line-height: 1.25rem;
 
-  ${(p) =>
-    p.sx.type === 'outline' &&
+  min-width: 140px;
+
+  ${(props) =>
+    props.sx.type === 'outline' &&
     `
         background-color: transparent;
         border: 1px solid ${primaryColor};
         color: ${primaryColor};
     `}
 
-  ${(p) =>
-    p.sx.type === 'solid' &&
+  ${(props) =>
+    props.sx.type === 'solid' &&
     `
         background-color: ${primaryColor};
         color: white;
     `}
 
-    ${(p) =>
-    p.sx.small &&
+    ${(props) =>
+    props.sx.small &&
     `
         font-family : inherit;
         font-size   : 0.75rem;
@@ -41,17 +43,17 @@ const StyledButton = styled.button`
         line-height : 1rem;
     `}
 
-    ${(p) =>
-    !p.enabled &&
-    p.sx.type === 'solid' &&
+    ${(props) =>
+    !props.enabled &&
+    props.sx.type === 'solid' &&
     `
         background-color: gray;
         color: #000;
     `}
 
-    ${(p) =>
-    !p.enabled &&
-    p.sx.type === 'outline' &&
+    ${(props) =>
+    !props.enabled &&
+    props.sx.type === 'outline' &&
     `
         border: 1px solid gray;
         color: gray;

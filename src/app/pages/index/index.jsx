@@ -8,18 +8,18 @@ const IndexPage = () => (
       NFT assets collateralized lending and rent protocol on Ethereum
     </Heading>
     <ButtonContainer>
-      <button>Learn more</button>
-      <button>Enter app</button>
+      <PrimaryButton sx={{ type: 'outline' }}>Learn more</PrimaryButton>
+      <PrimaryButton sx={{ type: 'solid' }}>Enter app</PrimaryButton>
     </ButtonContainer>
   </Container>
 );
 const Container = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  gap: 5rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: center;
   @media (max-width: 48rem) {
-    gap: 1.875rem;
+    gap: 0.625rem;
   }
 `;
 const Heading = styled.h1`
@@ -35,6 +35,7 @@ const Heading = styled.h1`
 `;
 const ButtonContainer = styled.div`
   display: flex;
+  gap: 1.5rem;
 `;
 
 export default IndexPage;

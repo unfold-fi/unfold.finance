@@ -9,6 +9,7 @@ import LogoImg from '../../assets/logo.png';
 
 import injectedConnector from '../../web3/connectors/injected';
 import { useEagerConnect, useInactiveListener } from '../../web3';
+import PrimaryButton from '../primaryButton';
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,10 @@ const HeaderComponent = () => {
       </NavigationWrapper>
       {!account && (
         <ConnectButtonWrapper>
-          <ConnectButton onClick={handleConnectButtonClick}>
+          <ConnectButton
+            sx={{ type: 'outline' }}
+            onClick={handleConnectButtonClick}
+          >
             Connect Wallet
           </ConnectButton>
         </ConnectButtonWrapper>
@@ -68,9 +72,7 @@ const Container = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  display: grid;
-  align-content: center;
-  margin-top: -0.625rem;
+  margin-top: -0.1875rem;
 `;
 
 const Logo = styled.img`
@@ -84,11 +86,9 @@ const Logo = styled.img`
 `;
 
 const NavigationWrapper = styled.nav`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  align-content: center;
-  margin: 0 1.5rem;
+  display: flex;
+  gap: 3.75rem;
+  margin-left: 3.125rem;
 
   @media (max-width: 48rem) {
     display: none;
@@ -98,7 +98,6 @@ const NavigationWrapper = styled.nav`
 const NavigationLink = styled.a`
   display: block;
   padding: 10px 5px;
-  margin-left: 10px;
 `;
 
 const ConnectButtonWrapper = styled.div`
@@ -109,7 +108,7 @@ const ConnectButtonWrapper = styled.div`
     display: none;
   }
 `;
-const ConnectButton = styled.button``;
+const ConnectButton = styled(PrimaryButton)``;
 
 const Profile = {
   Wrapper: styled.div`

@@ -105,6 +105,9 @@ const GlobalStyle = createGlobalStyle`
     a {
       text-decoration: none;
     }
+    a:hover {
+      text-decoration: underline;
+    }
 
     @media (max-width: 48rem) {
       body {
