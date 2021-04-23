@@ -14,10 +14,10 @@ const routeOptions = [
   },
 ];
 
-const route = (options) => ({
-  path: options.path,
-  exact: options.exact,
-  component: options.component,
+const route = ({ path, exact, component }) => ({
+  path,
+  exact,
+  component,
 });
 
 const routes = routeOptions.map(route);

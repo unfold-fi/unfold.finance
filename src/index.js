@@ -20,14 +20,16 @@ const getLibrary = (provider) => {
 
 const store = createStore();
 
-ReactDOM.hydrate(
-  <Provider store={store}>
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Web3ReactProvider>
-  </Provider>,
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Web3ReactProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root'),
 );
 
