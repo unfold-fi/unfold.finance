@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PrimaryButton from '../../components/primaryButton';
 
@@ -8,8 +9,12 @@ const IndexPage = () => (
       NFT assets collateralized lending and rent protocol on Ethereum
     </Heading>
     <ButtonContainer>
-      <PrimaryButton sx={{ type: 'outline' }}>Learn more</PrimaryButton>
-      <PrimaryButton sx={{ type: 'solid' }}>Enter app</PrimaryButton>
+      <Link to="">
+        <PrimaryButton sx={{ type: 'outline' }}>Learn more</PrimaryButton>
+      </Link>
+      <Link to="/app">
+        <PrimaryButton sx={{ type: 'solid' }}>Enter app</PrimaryButton>
+      </Link>
     </ButtonContainer>
   </Container>
 );
