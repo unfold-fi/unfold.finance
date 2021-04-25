@@ -1,21 +1,18 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import PoolCard from '../../components/pool';
+import VaultCard from '../../components/vault';
+
+import config from '../../../config';
 
 const AppPage = () => (
   <Container>
     <Heading>Stake</Heading>
-    <Pool.Grid>
-      <PoolCard />
-      <PoolCard />
-      <PoolCard />
-      <PoolCard />
-      <PoolCard />
-      <PoolCard />
-      <PoolCard />
-    </Pool.Grid>
+    <Vault.Grid>
+      {config.Vaults.map((vault, index) => {
+        return <VaultCard key={index} {...vault} />;
+      })}
+    </Vault.Grid>
   </Container>
 );
 const Container = styled.div`
@@ -31,7 +28,7 @@ const Heading = styled.h1`
   }
 `;
 
-const Pool = {
+const Vault = {
   Grid: styled.div`
     display: grid;
     grid-template-columns: repeat(3, auto);

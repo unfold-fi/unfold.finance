@@ -84,7 +84,7 @@ const GlobalStyle = createGlobalStyle`
     body {
       margin: 0;
       font-size: 100%;
-      line-height: 1;
+      line-height: 120%;
       background-color: white;
     }
     ol, ul {

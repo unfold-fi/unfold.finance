@@ -1,4 +1,6 @@
-const primaryColor = '#4B58DF';
+const CONSTANTS = {
+  primaryColor: '#4B58DF',
+};
 
 const truncateAddress = (address, firstSegLength = 7, lastSegLength = 5) => {
   if (!address) return '';
@@ -9,4 +11,18 @@ const truncateAddress = (address, firstSegLength = 7, lastSegLength = 5) => {
     : '...';
 };
 
-export { truncateAddress, primaryColor };
+const toFixed = (value, decimals) => {
+  if (!value) value = 0;
+
+  return Number(value).toFixed(decimals);
+};
+
+const toFixedDown = (value, decimals) => {
+  if (!value) value = 0;
+
+  return Number(
+    `${Math.floor(Number(`${value}e${decimals}`))}e-${decimals}`,
+  ).toString();
+};
+
+export { CONSTANTS, truncateAddress, toFixed, toFixedDown };

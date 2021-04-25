@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { primaryColor } from '../../utils';
+import { CONSTANTS } from '../../utils';
 
 const StyledButton = styled.button`
   box-sizing: border-box;
@@ -10,7 +10,11 @@ const StyledButton = styled.button`
   border: unset;
   border-radius: 0.375rem;
 
-  cursor: pointer;
+  ${(p) =>
+    p.enabled &&
+    `
+    cursor: pointer;
+    `}
   outline: none;
 
   font-size: 1rem;
@@ -23,14 +27,14 @@ const StyledButton = styled.button`
     props.sx.type === 'outline' &&
     `
         background-color: transparent;
-        border: 1px solid ${primaryColor};
-        color: ${primaryColor};
+        border: 1px solid ${CONSTANTS.primaryColor};
+        color: ${CONSTANTS.primaryColor};
     `}
 
   ${(props) =>
     props.sx.type === 'solid' &&
     `
-        background-color: ${primaryColor};
+        background-color: ${CONSTANTS.primaryColor};
         color: white;
     `}
 

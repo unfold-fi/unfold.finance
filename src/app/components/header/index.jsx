@@ -7,7 +7,7 @@ import styled, { keyframes } from 'styled-components';
 
 import LogoImg from '../../assets/logo.png';
 
-import { truncateAddress, primaryColor } from '../../utils';
+import { truncateAddress, CONSTANTS } from '../../utils';
 
 import injectedConnector from '../../web3/connectors/injected';
 import { useEagerConnect, useInactiveListener } from '../../web3';
@@ -150,7 +150,7 @@ const Profile = {
   `,
 
   Address: styled.div`
-    color: ${primaryColor};
+    color: ${CONSTANTS.primaryColor};
     font-size: 14px;
     text-align: right;
   `,
