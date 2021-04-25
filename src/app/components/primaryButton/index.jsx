@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const primaryColor = '#4B58DF';
+import { primaryColor } from '../../utils';
 
 const StyledButton = styled.button`
   box-sizing: border-box;

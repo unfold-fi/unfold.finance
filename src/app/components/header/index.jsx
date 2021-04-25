@@ -7,6 +7,8 @@ import styled, { keyframes } from 'styled-components';
 
 import LogoImg from '../../assets/logo.png';
 
+import { truncateAddress, primaryColor } from '../../utils';
+
 import injectedConnector from '../../web3/connectors/injected';
 import { useEagerConnect, useInactiveListener } from '../../web3';
 import PrimaryButton from '../primaryButton';
@@ -25,6 +27,36 @@ const HeaderComponent = () => {
       await activate(injectedConnector);
     }
   };
+
+  const mobileRef = useRef(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const MOBILE_MENU = (
+    <MobileWrapper ref={mobileRef}>
+      <MobileIcon
+        open={mobileOpen}
+        onClick={() => setMobileOpen(!mobileOpen)}
+      />
+      <MobileContainer open={mobileOpen}>
+        {account && (
+          <Profile.Address>{truncateAddress(account)}</Profile.Address>
+        )}
+        {!account && (
+          <MobileConnectButton
+            sx={{ type: 'outline' }}
+            onClick={handleConnectButtonClick}
+          >
+            Connect Wallet
+          </MobileConnectButton>
+        )}
+        <MobileLink href="/docs">Documentation</MobileLink>
+        <MobileLink href="/docs">Governance</MobileLink>
+        <MobileLink href="/docs">Forum</MobileLink>
+        <MobileLink href="/docs">Rewards</MobileLink>
+      </MobileContainer>
+    </MobileWrapper>
+  );
+
   return (
     <Container>
       <LogoWrapper>
@@ -50,12 +82,10 @@ const HeaderComponent = () => {
       )}
       {account && (
         <Profile.Wrapper>
-          <Profile.Container>
-            <Profile.Nick>{account}</Profile.Nick>
-            <Profile.Address>{account}</Profile.Address>
-          </Profile.Container>
+          <Profile.Address>{truncateAddress(account)}</Profile.Address>
         </Profile.Wrapper>
       )}
+      {MOBILE_MENU}
     </Container>
   );
 };
@@ -63,8 +93,8 @@ const HeaderComponent = () => {
 const Container = styled.header`
   position: relative;
   display: grid;
-  grid-template-columns: max-content 1fr repeat(4, max-content);
-  padding: 1.25rem 0;
+  grid-template-columns: max-content 1fr repeat(2, max-content);
+  padding: 0.75rem 0;
   @media (max-width: 48rem) {
     grid-template-columns: unset;
     grid-auto-flow: column;
@@ -72,7 +102,7 @@ const Container = styled.header`
 `;
 
 const LogoWrapper = styled.div`
-  margin-top: -0.1875rem;
+  margin-top: -0.25rem;
 `;
 
 const Logo = styled.img`
@@ -87,8 +117,8 @@ const Logo = styled.img`
 
 const NavigationWrapper = styled.nav`
   display: flex;
-  gap: 3.75rem;
-  margin-left: 3.125rem;
+  gap: 2.5rem;
+  margin-left: 2.5rem;
 
   @media (max-width: 48rem) {
     display: none;
@@ -112,43 +142,73 @@ const ConnectButton = styled(PrimaryButton)``;
 
 const Profile = {
   Wrapper: styled.div`
-    display: grid;
-    justify-content: start;
-    align-content: center;
-
-    @media (max-width: 62.5rem) {
+    display: flex;
+    align-items: center;
+    @media (max-width: 48rem) {
       display: none;
     }
   `,
-  Container: styled.div`
-    display: grid;
-    grid-template-columns: 1fr 2.5rem;
-    grid-template-rows: 1.25rem 0.9375rem;
-    column-gap: 0.625rem;
-    row-gap: 0.3125rem;
-
-    user-select: none;
-    cursor: pointer;
-  `,
-
-  Nick: styled.div`
-    grid-column-start: 1;
-    grid-row-start: 1;
-
-    font-weight: 700;
-    text-align: right;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
 
   Address: styled.div`
-    grid-column-start: 1;
-    grid-row-start: 2;
-    font-size: 0.625rem;
+    color: ${primaryColor};
+    font-size: 14px;
     text-align: right;
   `,
 };
+
+const MobileWrapper = styled.div`
+  display: grid;
+  align-content: center;
+  margin: 0 0.625rem;
+  min-width: 1.5625rem;
+  justify-content: end;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileIcon = styled.div`
+  &:before {
+    content: '${(p) => (!p.open ? '☰' : '⨯')}';
+  }
+
+  font-size: ${(p) => (!p.open ? '18px' : '24px')};
+
+  cursor: pointer;
+`;
+
+const MobileContainerOnShown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-6.25rem);
+  }
+`;
+
+const MobileContainer = styled.div`
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 3.125rem;
+
+  display: ${(p) => (p.open ? 'flex' : 'none')};
+  flex-direction: column;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100vh - 3.125rem);
+  padding: 1.25rem;
+  background-color: white;
+  align-items: center;
+
+  animation: ${MobileContainerOnShown} 0.1s ease;
+`;
+
+const MobileConnectButton = styled(PrimaryButton)`
+  margin-bottom: 0.625rem;
+`;
+const MobileLink = styled.a`
+  margin: 0.625rem 0;
+`;
 
 export default HeaderComponent;

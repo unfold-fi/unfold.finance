@@ -128,10 +128,10 @@ const Container = styled.div`
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  margin: 0 24px;
+  margin: 0 1.5rem;
 
   @media (max-width: 48rem) {
-    margin: 0 0.625rem;
+    margin: 0 1.5rem;
   }
 `;
 
