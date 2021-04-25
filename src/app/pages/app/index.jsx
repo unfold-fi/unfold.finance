@@ -24,7 +24,9 @@ const Container = styled.div`
 const Heading = styled.h1`
   font-size: 1.5rem;
   font-weight: 400;
+  margin-top: 2.5rem;
   @media (max-width: 48rem) {
+    margin-top: 1.25rem;
     font-size: 1.125rem;
   }
 `;
