@@ -2,34 +2,48 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import PoolCard from '../../components/pool';
+
 const AppPage = () => (
   <Container>
-    <Heading>App page</Heading>
+    <Heading>Stake</Heading>
+    <Pool.Grid>
+      <PoolCard />
+      <PoolCard />
+      <PoolCard />
+      <PoolCard />
+      <PoolCard />
+      <PoolCard />
+      <PoolCard />
+    </Pool.Grid>
   </Container>
 );
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  justify-content: center;
-  @media (max-width: 48rem) {
-    gap: 0.625rem;
-  }
+  width: 100%;
 `;
 const Heading = styled.h1`
-  font-size: 3.5rem;
-  line-height: 4rem;
-  color: #4b58df;
-  max-width: 50rem;
+  font-size: 1.5rem;
   font-weight: 400;
   @media (max-width: 48rem) {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    font-size: 1.125rem;
   }
 `;
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 1.5rem;
-`;
+
+const Pool = {
+  Grid: styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    row-gap: 3.125rem;
+    margin-top: 1.875rem;
+    justify-content: space-between;
+    @media (max-width: 59.625rem) {
+      grid-template-columns: repeat(2, auto);
+      justify-content: space-evenly;
+    }
+    @media (max-width: 39.375rem) {
+      grid-template-columns: unset;
+    }
+  `,
+};
 
 export default AppPage;

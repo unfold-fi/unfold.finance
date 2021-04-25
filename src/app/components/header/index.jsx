@@ -60,7 +60,7 @@ const HeaderComponent = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.header`
   position: relative;
   display: grid;
   grid-template-columns: max-content 1fr repeat(4, max-content);

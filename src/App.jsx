@@ -118,8 +118,8 @@ const GlobalStyle = createGlobalStyle`
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  max-width: 77.5rem;
-  min-width: 23.4375rem;
+  max-width: 1072px;
+  min-width: 375px;
   margin: 0 auto;
 `;
 
@@ -128,7 +128,7 @@ const Container = styled.div`
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  margin: 0 1.25rem;
+  margin: 0 24px;
 
   @media (max-width: 48rem) {
     margin: 0 0.625rem;
