@@ -1,18 +1,73 @@
-import React, { useCallback } from 'react';
-
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useWeb3React } from '@web3-react/core';
 import styled, { keyframes } from 'styled-components';
 
+import {
+  approveTokenRequest,
+  depositTokenRequest,
+  withdrawTokenRequest,
+} from '../../store/slices/web3';
 import PrimaryButton from '../primaryButton';
 import config from '../../../config';
 
 import { toFixed } from '../../utils';
 
-const VaultView = ({ className, name, desc, enabled, tokenSymbol }) => {
-  const buttonText = enabled ? 'Approve' : 'Soon';
-  const apy = '78.36';
-  const locked = '1683200.125';
-  const stake = '0.00';
-  const reward = '0.0000';
+const VaultView = ({
+  className,
+  name,
+  desc,
+  tokenSymbol,
+  tokenAddress,
+  tokenAbi,
+  vaultAddress,
+  vaultAbi,
+  enabled,
+}) => {
+  const dispatch = useDispatch();
+  let buttonText = enabled ? 'Approve' : 'Soon';
+  let apy = 0;
+  let locked = 0;
+  let stake = 0;
+  let reward = 0;
+  let approved = false;
+  const amount = 1;
+
+  const vault = {
+    name,
+    tokenSymbol,
+    tokenAddress,
+    tokenAbi,
+    vaultAddress,
+    vaultAbi,
+  };
+
+  const { vaults } = useSelector((state) => state.web3);
+  const { library } = useWeb3React();
+
+  if (enabled) {
+    const vaultState = vaults[name];
+    locked = vaultState.locked;
+    stake = vaultState.stake;
+    reward = vaultState.reward;
+    approved = vaultState.approved;
+  }
+
+  const handleApproveClick = () => {
+    dispatch(approveTokenRequest({ vault, library }));
+    console.log('Approve');
+  };
+
+  const handleDepositClick = () => {
+    dispatch(depositTokenRequest({ vault, amount, library }));
+    console.log('Deposit');
+  };
+
+  const handleWithdrawClick = () => {
+    dispatch(withdrawTokenRequest({ vault, amount, library }));
+    console.log('Withdraw');
+  };
+
   return (
     <Container className={className}>
       <VaultCard.TextContainer>
@@ -28,12 +83,35 @@ const VaultView = ({ className, name, desc, enabled, tokenSymbol }) => {
           Your stake: {toFixed(stake, 4)} {tokenSymbol}
         </VaultCard.Meta>
         <VaultCard.Meta>
-          Reward: {toFixed(reward, 4)} {config.TokenSymbol}
+          Reward: {toFixed(reward, 4)} {config.Contracts.ERC20.tokenSymbol}
         </VaultCard.Meta>
       </VaultCard.MetaContainer>
-      <PrimaryButton sx={{ type: 'outline' }} enabled={enabled}>
-        {buttonText}
-      </PrimaryButton>
+      {!enabled && (
+        <PrimaryButton sx={{ type: 'outline' }} enabled={false}>
+          Soon
+        </PrimaryButton>
+      )}
+      {enabled && !approved && (
+        <PrimaryButton sx={{ type: 'outline' }} onClick={handleApproveClick}>
+          Approve
+        </PrimaryButton>
+      )}
+      {enabled && approved && (
+        <ButtonContainer>
+          <PrimaryButtonWrapper
+            sx={{ type: 'outline' }}
+            onClick={handleDepositClick}
+          >
+            Deposit
+          </PrimaryButtonWrapper>
+          <PrimaryButtonWrapper
+            sx={{ type: 'outline' }}
+            onClick={handleWithdrawClick}
+          >
+            Withdraw
+          </PrimaryButtonWrapper>
+        </ButtonContainer>
+      )}
     </Container>
   );
 };
@@ -83,5 +161,16 @@ const VaultCard = {
     font-size: 0.875rem;
   `,
 };
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 0.625rem;
+`;
+
+const PrimaryButtonWrapper = styled(PrimaryButton)`
+  min-width: unset;
+  flex: 1 1 0;
+`;
 
 export default VaultView;

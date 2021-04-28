@@ -9,6 +9,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useEagerConnect, useInactiveListener } from './app/web3';
 import { getAccountDataRequest } from './app/store/slices/web3';
 
+import Alerts from './app/components/alert';
+
 import routes from './app/routes';
 import NotFound from './app/pages/404';
 import Header from './app/components/header';
@@ -33,9 +35,9 @@ const App = () => {
       <Normalize />
       <GlobalStyle />
       <Container>
-        {/* <NotificationContainer>
-          <Notifications />
-        </NotificationContainer> */}
+        <AlertContainer>
+          <Alerts />
+        </AlertContainer>
         <Header />
         <Content>
           <Switch>
@@ -137,6 +139,16 @@ const Container = styled.div`
 
 const Content = styled.main`
   display: flex;
+`;
+
+const AlertContainer = styled.div`
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  @media (max-width: 48rem) {
+    width: 100%;
+  }
+  z-index: 2;
 `;
 
 export default App;
