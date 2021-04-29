@@ -66,7 +66,7 @@ const VaultView = ({
   };
 
   return (
-    <Container className={className} loading={loading}>
+    <Container className={className} loading={loading ? 1 : 0}>
       <VaultCard.TextContainer>
         <VaultCard.Title>{name}</VaultCard.Title>
         <VaultCard.Desc>{desc}</VaultCard.Desc>
