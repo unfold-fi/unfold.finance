@@ -62,7 +62,7 @@ const VaultView = ({
   };
 
   const handleWithdrawClick = () => {
-    dispatch(withdrawTokenRequest({ vault, amount, library }));
+    dispatch(withdrawTokenRequest({ vault, amount: stake, library }));
   };
 
   return (

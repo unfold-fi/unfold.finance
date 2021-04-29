@@ -123,7 +123,7 @@ export const withdrawTokenRequest = createAsyncThunk(
 
       trackTransaction({
         hash: response.tx.hash,
-        message: `${amount} ${vault.tokenSymbol} withdrew`,
+        message: `${amount} ${vault.tokenSymbol} withdrawn`,
         provider: library,
         dispatch,
         callback: async () => {
