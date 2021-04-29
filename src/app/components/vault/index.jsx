@@ -66,7 +66,7 @@ const VaultView = ({
   };
 
   return (
-    <Container className={className} loading={loading ? 1 : 0}>
+    <Container className={className} $loading={loading}>
       <VaultCard.TextContainer>
         <VaultCard.Title>{name}</VaultCard.Title>
         <VaultCard.Desc>{desc}</VaultCard.Desc>
@@ -143,8 +143,8 @@ const Container = styled.div`
   padding: 1.875rem;
   justify-content: space-between;
 
-  ${(p) =>
-    p.loading &&
+  ${(props) =>
+    props.$loading &&
     css`
       animation: ${pulse} 1s infinite alternate;
     `}
