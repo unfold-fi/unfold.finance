@@ -191,15 +191,4 @@ const Modal = {
   `,
 };
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 0.625rem;
-`;
-
-const PrimaryButtonWrapper = styled(PrimaryButton)`
-  min-width: unset;
-  flex: 1 1 0;
-`;
-
 export default ModalView;

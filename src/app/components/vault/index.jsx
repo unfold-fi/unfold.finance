@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
 import styled, { css, keyframes } from 'styled-components';
 
-import {
-  approveTokenRequest,
-  depositTokenRequest,
-  withdrawTokenRequest,
-} from '../../store/slices/web3';
+import { approveTokenRequest } from '../../store/slices/web3';
 import PrimaryButton from '../primaryButton';
 import config from '../../../config';
 
@@ -44,7 +40,7 @@ const VaultView = ({
   };
 
   const { vaults, loading } = useSelector((state) => state.web3);
-  const { library } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   if (enabled) {
     const vaultState = vaults[name];
