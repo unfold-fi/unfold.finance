@@ -5,16 +5,18 @@ import VaultCard from '../../components/vault';
 
 import config from '../../../config';
 
-const AppPage = () => (
-  <Container>
-    <Heading>Stake</Heading>
-    <Vault.Grid>
-      {config.Vaults.map((vault, index) => {
-        return <VaultCard key={index} {...vault} />;
-      })}
-    </Vault.Grid>
-  </Container>
-);
+const AppPage = () => {
+  return (
+    <Container>
+      <Heading>Stake</Heading>
+      <Vault.Grid>
+        {config.Vaults.map((vault, index) => {
+          return <VaultCard key={index} {...vault} />;
+        })}
+      </Vault.Grid>
+    </Container>
+  );
+};
 const Container = styled.div`
   width: 100%;
 `;

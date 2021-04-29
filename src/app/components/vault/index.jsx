@@ -13,6 +13,8 @@ import config from '../../../config';
 
 import { toFixed } from '../../utils';
 
+import { ModalType, showModal } from '../../store/slices/modal';
+
 const VaultView = ({
   className,
   name,
@@ -25,13 +27,12 @@ const VaultView = ({
   enabled,
 }) => {
   const dispatch = useDispatch();
-  let buttonText = enabled ? 'Approve' : 'Soon';
   let apy = 0;
   let locked = 0;
   let stake = 0;
+  let balance = 0;
   let reward = 0;
   let approved = false;
-  const amount = 1;
 
   const vault = {
     name,
@@ -49,6 +50,7 @@ const VaultView = ({
     const vaultState = vaults[name];
     locked = vaultState.locked;
     stake = vaultState.stake;
+    balance = vaultState.balance;
     reward = vaultState.reward;
     approved = vaultState.approved;
   }
@@ -58,11 +60,25 @@ const VaultView = ({
   };
 
   const handleDepositClick = () => {
-    dispatch(depositTokenRequest({ vault, amount, library }));
+    dispatch(
+      showModal({
+        type: ModalType.DEPOSIT,
+        symbol: vault.tokenSymbol,
+        balance: balance,
+        vault,
+      }),
+    );
   };
 
   const handleWithdrawClick = () => {
-    dispatch(withdrawTokenRequest({ vault, amount: stake, library }));
+    dispatch(
+      showModal({
+        type: ModalType.WITHDRAW,
+        symbol: vault.tokenSymbol,
+        balance: stake,
+        vault,
+      }),
+    );
   };
 
   return (

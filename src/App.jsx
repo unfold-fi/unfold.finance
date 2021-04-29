@@ -15,6 +15,7 @@ import routes from './app/routes';
 import NotFound from './app/pages/404';
 import Header from './app/components/header';
 import Footer from './app/components/footer';
+import Modal from './app/components/actionModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,25 +32,28 @@ const App = () => {
   }, [dispatch, account, library]);
 
   return (
-    <Wrapper>
+    <>
       <Normalize />
       <GlobalStyle />
-      <Container>
-        <AlertContainer>
-          <Alerts />
-        </AlertContainer>
-        <Header />
-        <Content>
-          <Switch>
-            {routes.map((route, index) => (
-              <Route key={index} {...route} />
-            ))}
-            <Route component={NotFound} />
-          </Switch>
-        </Content>
-        <Footer />
-      </Container>
-    </Wrapper>
+      <ModalContainer />
+      <Wrapper>
+        <Container>
+          <AlertContainer>
+            <Alerts />
+          </AlertContainer>
+          <Header />
+          <Content>
+            <Switch>
+              {routes.map((route, index) => (
+                <Route key={index} {...route} />
+              ))}
+              <Route component={NotFound} />
+            </Switch>
+          </Content>
+          <Footer />
+        </Container>
+      </Wrapper>
+    </>
   );
 };
 const GlobalStyle = createGlobalStyle`
@@ -150,5 +154,7 @@ const AlertContainer = styled.div`
   }
   z-index: 2;
 `;
+
+const ModalContainer = styled(Modal)``;
 
 export default App;

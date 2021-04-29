@@ -25,6 +25,7 @@ const getUserData = async ({ account }, provider) => {
           provider,
         );
         const allowance = await token.allowance(account, vault.vaultAddress);
+        const balance = await token.balanceOf(account);
         const locked = await vaultContract.totalSupply();
         const stake = await vaultContract.balanceOf(account);
         const reward = await vaultContract.earned(account);
@@ -33,13 +34,12 @@ const getUserData = async ({ account }, provider) => {
           name: vault.name,
           locked: ethers.utils.formatEther(locked),
           stake: ethers.utils.formatEther(stake),
+          balance: ethers.utils.formatEther(balance),
           reward: ethers.utils.formatEther(reward),
           approved: allowance.gt(0),
         });
       }
     }
-
-    console.log(vaults);
 
     return {
       account,
@@ -148,11 +148,36 @@ const withdrawTokenTx = async ({ account, vault, amount }, provider) => {
   }
 };
 
+const exitTokenTx = async ({ account, vault }, provider) => {
+  try {
+    const signer = await provider.getSigner(account);
+
+    const poolContract = new ethers.Contract(
+      vault.vaultAddress,
+      vault.vaultAbi,
+      signer,
+    );
+
+    const result = await poolContract.exit();
+
+    return {
+      tx: result,
+    };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      return Promise.reject(error);
+    }
+    return Promise.reject(new ApiError(ErrorCodes.BLOCKCHAIN, error.message));
+  }
+};
+
 const Web3Api = {
   getUserData,
   approveTokenTx,
   depositTokenTx,
   withdrawTokenTx,
+  exitTokenTx,
 };
 
 export default Web3Api;
