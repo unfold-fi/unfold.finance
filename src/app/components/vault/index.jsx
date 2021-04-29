@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import {
   approveTokenRequest,
@@ -42,7 +42,7 @@ const VaultView = ({
     vaultAbi,
   };
 
-  const { vaults } = useSelector((state) => state.web3);
+  const { vaults, loading } = useSelector((state) => state.web3);
   const { library } = useWeb3React();
 
   if (enabled) {
@@ -55,21 +55,18 @@ const VaultView = ({
 
   const handleApproveClick = () => {
     dispatch(approveTokenRequest({ vault, library }));
-    console.log('Approve');
   };
 
   const handleDepositClick = () => {
     dispatch(depositTokenRequest({ vault, amount, library }));
-    console.log('Deposit');
   };
 
   const handleWithdrawClick = () => {
     dispatch(withdrawTokenRequest({ vault, amount, library }));
-    console.log('Withdraw');
   };
 
   return (
-    <Container className={className}>
+    <Container className={className} loading={loading}>
       <VaultCard.TextContainer>
         <VaultCard.Title>{name}</VaultCard.Title>
         <VaultCard.Desc>{desc}</VaultCard.Desc>
@@ -123,6 +120,17 @@ const Shown = keyframes`
   }
 `;
 
+const pulse = keyframes`
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.2;
+  }
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,7 +143,11 @@ const Container = styled.div`
   padding: 1.875rem;
   justify-content: space-between;
 
-  animation: ${Shown} 1s ease;
+  ${(p) =>
+    p.loading &&
+    css`
+      animation: ${pulse} 1s infinite alternate;
+    `}
 `;
 
 const VaultCard = {

@@ -177,8 +177,10 @@ const web3Slice = createSlice({
       state.ethBalance = action.payload.ethBalance;
       if (action.payload.vaults) {
         for (const vault of action.payload.vaults) {
-          state.vaults[vault.name].approved = vault.approved;
+          state.vaults[vault.name].locked = vault.locked;
           state.vaults[vault.name].stake = vault.stake;
+          state.vaults[vault.name].reward = vault.reward;
+          state.vaults[vault.name].approved = vault.approved;
         }
       }
       //

@@ -25,11 +25,16 @@ const getUserData = async ({ account }, provider) => {
           provider,
         );
         const allowance = await token.allowance(account, vault.vaultAddress);
+        const locked = await vaultContract.totalSupply();
         const stake = await vaultContract.balanceOf(account);
+        const reward = await vaultContract.earned(account);
+
         vaults.push({
           name: vault.name,
-          approved: allowance.gt(0),
+          locked: ethers.utils.formatEther(locked),
           stake: ethers.utils.formatEther(stake),
+          reward: ethers.utils.formatEther(reward),
+          approved: allowance.gt(0),
         });
       }
     }
@@ -129,7 +134,7 @@ const withdrawTokenTx = async ({ account, vault, amount }, provider) => {
       signer,
     );
 
-    const result = await poolContract.withdraw(unstakeB);
+    const result = await poolContract.withdraw(unstakeB, unstakeB);
 
     return {
       tx: result,
