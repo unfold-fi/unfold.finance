@@ -77,6 +77,17 @@ const VaultView = ({
     );
   };
 
+  const handleClaimClick = () => {
+    dispatch(
+      showModal({
+        type: ModalType.CLAIM,
+        symbol: vault.tokenSymbol,
+        balance: reward,
+        vault,
+      }),
+    );
+  };
+
   return (
     <Container className={className} $loading={loading}>
       <VaultCard.TextContainer>
@@ -91,9 +102,16 @@ const VaultView = ({
         <VaultCard.Meta>
           Your stake: {toFixed(stake, 4)} {tokenSymbol}
         </VaultCard.Meta>
-        <VaultCard.Meta>
-          Reward: {toFixed(reward, 4)} {config.Contracts.ERC20.tokenSymbol}
-        </VaultCard.Meta>
+        <VaultCard.RewardContainer>
+          <VaultCard.RewardText>
+            Reward: {toFixed(reward, 4)} {config.Contracts.ERC20.tokenSymbol}
+          </VaultCard.RewardText>
+          {Number(reward) > 0 && (
+            <VaultCard.RewardButton onClick={handleClaimClick}>
+              Claim
+            </VaultCard.RewardButton>
+          )}
+        </VaultCard.RewardContainer>
       </VaultCard.MetaContainer>
       {!enabled && (
         <PrimaryButton sx={{ type: 'outline' }} enabled={false}>
@@ -178,11 +196,33 @@ const VaultCard = {
     gap: 0.75rem;
     flex-grow: 1;
     justify-content: flex-end;
-    margin-bottom: 1.875rem;
   `,
 
   Meta: styled.div`
     font-size: 0.875rem;
+  `,
+
+  RewardContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 1.875rem;
+    gap: 0.625rem;
+    align-items: center;
+  `,
+
+  RewardText: styled.div`
+    font-size: 0.875rem;
+  `,
+
+  RewardButton: styled.div`
+    background: #0e1239;
+    color: white;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
   `,
 };
 

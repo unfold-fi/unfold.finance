@@ -180,6 +180,45 @@ export const exitTokenRequest = createAsyncThunk(
   },
 );
 
+export const getRewardRequest = createAsyncThunk(
+  'web3/getReward',
+  async ({ vault, library }, { getState, rejectWithValue, dispatch }) => {
+    const { account } = getState().web3;
+
+    try {
+      const response = await web3Service.getRewardTx(
+        { account, vault },
+        library,
+      );
+
+      dispatch(
+        showTxPending({
+          hash: response.tx.hash,
+          message: `Claim reward from ${vault.name} pending...`,
+        }),
+      );
+
+      dispatch(closeModal());
+
+      trackTransaction({
+        hash: response.tx.hash,
+        message: `${vault.name} rewards claimed`,
+        provider: library,
+        dispatch,
+        callback: async () => {
+          dispatch(getAccountDataRequest({ account, library }));
+        },
+      });
+
+      return true;
+    } catch (e) {
+      const { status, statusText } = e;
+      dispatch(showError(statusText));
+      return rejectWithValue({ status, statusText });
+    }
+  },
+);
+
 const vaults = config.Vaults.reduce((result, vault) => {
   if (vault.enabled) {
     result.set(vault.name, {

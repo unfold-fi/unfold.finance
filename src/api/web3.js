@@ -172,12 +172,37 @@ const exitTokenTx = async ({ account, vault }, provider) => {
   }
 };
 
+const getRewardTx = async ({ account, vault }, provider) => {
+  try {
+    const signer = await provider.getSigner(account);
+
+    const poolContract = new ethers.Contract(
+      vault.vaultAddress,
+      vault.vaultAbi,
+      signer,
+    );
+
+    const result = await poolContract.getReward();
+
+    return {
+      tx: result,
+    };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      return Promise.reject(error);
+    }
+    return Promise.reject(new ApiError(ErrorCodes.BLOCKCHAIN, error.message));
+  }
+};
+
 const Web3Api = {
   getUserData,
   approveTokenTx,
   depositTokenTx,
   withdrawTokenTx,
   exitTokenTx,
+  getRewardTx,
 };
 
 export default Web3Api;

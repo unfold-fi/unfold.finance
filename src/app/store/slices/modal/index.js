@@ -1,6 +1,7 @@
 /* eslint no-plusplus: "off" */
 
 import { createSlice } from '@reduxjs/toolkit';
+import config from '../../../../config';
 
 export const ModalType = {
   DEPOSIT: 'Deposit',
@@ -25,7 +26,10 @@ const modalSlice = createSlice({
   reducers: {
     showModal(state, action) {
       const type = action.payload.type;
-      const symbol = action.payload.symbol;
+      const symbol =
+        type === ModalType.CLAIM
+          ? config.Contracts.ERC20.tokenSymbol
+          : action.payload.symbol;
 
       state.type = type;
       state.title = `${type} ${symbol}`;
