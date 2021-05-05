@@ -5,7 +5,7 @@ import { CONSTANTS } from '../../utils';
 
 const StyledButton = styled.button`
   box-sizing: border-box;
-  padding: 8px 16px;
+  padding: 0.6875rem 1rem;
 
   border: unset;
   border-radius: 0.375rem;
@@ -21,21 +21,32 @@ const StyledButton = styled.button`
   font-weight: 400;
   line-height: 1.25rem;
 
-  min-width: 140px;
+  min-width: 8.75rem;
 
   ${(props) =>
     props.sx.type === 'outline' &&
+    props.enabled &&
     `
         background-color: transparent;
         border: 1px solid ${CONSTANTS.primaryColor};
         color: ${CONSTANTS.primaryColor};
+        &&:hover {
+          border: 1px solid ${CONSTANTS.primaryColorHover};
+          color: ${CONSTANTS.primaryColorHover};
+        }
     `}
 
   ${(props) =>
     props.sx.type === 'solid' &&
+    props.enabled &&
     `
         background-color: ${CONSTANTS.primaryColor};
+        border: 1px solid ${CONSTANTS.primaryColor};
         color: white;
+        &&:hover {
+          border: 1px solid ${CONSTANTS.primaryColorHover};
+          background-color: ${CONSTANTS.primaryColorHover};
+        }        
     `}
 
     ${(props) =>
@@ -51,16 +62,18 @@ const StyledButton = styled.button`
     !props.enabled &&
     props.sx.type === 'solid' &&
     `
-        background-color: gray;
-        color: #000;
+        background-color: #BEC3F3;
+        border: 1px solid #BEC3F3;
+        color: white;
     `}
 
     ${(props) =>
     !props.enabled &&
     props.sx.type === 'outline' &&
     `
-        border: 1px solid gray;
-        color: gray;
+        border: 1px solid #BEC3F3;
+        background-color: white;
+        color: #BEC3F3;
     `}
 `;
 
