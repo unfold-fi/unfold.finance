@@ -18,6 +18,12 @@ export class ApiError extends Error {
     let text = statusText;
 
     if (status === ErrorCodes.BLOCKCHAIN) {
+      if (text.includes("Cannot read property 'getSigner' of undefined")) {
+        text = 'Please ensure that you selected correct Ethereum network';
+      }
+      if (text.includes('underlying network changed')) {
+        text = 'Please ensure that you selected correct Ethereum network';
+      }
       if (text.includes('User denied transaction signature')) {
         text = 'Signature request rejected';
       }
