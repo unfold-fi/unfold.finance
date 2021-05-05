@@ -8,7 +8,7 @@ const routeOptions = [
     component: Index,
   },
   {
-    path: '/app',
+    path: '/rewards',
     exact: true,
     component: App,
   },

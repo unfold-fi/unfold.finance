@@ -12,8 +12,8 @@ const IndexPage = () => (
       <Link to="">
         <PrimaryButton sx={{ type: 'outline' }}>Learn more</PrimaryButton>
       </Link>
-      <Link to="/app">
-        <PrimaryButton sx={{ type: 'solid' }}>Enter app</PrimaryButton>
+      <Link to="/rewards">
+        <PrimaryButton sx={{ type: 'solid' }}>Rewards</PrimaryButton>
       </Link>
     </ButtonContainer>
   </Container>
