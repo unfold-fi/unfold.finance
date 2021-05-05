@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
 import styled, { css, keyframes } from 'styled-components';
 
-import { approveTokenRequest } from '../../store/slices/web3';
+import { approveTokenRequest, getRewardRequest } from '../../store/slices/web3';
 import PrimaryButton from '../primaryButton';
 import config from '../../../config';
 
@@ -78,14 +78,7 @@ const VaultView = ({
   };
 
   const handleClaimClick = () => {
-    dispatch(
-      showModal({
-        type: ModalType.CLAIM,
-        symbol: vault.tokenSymbol,
-        balance: reward,
-        vault,
-      }),
-    );
+    dispatch(getRewardRequest({ vault, library }));
   };
 
   return (
@@ -131,9 +124,11 @@ const VaultView = ({
           >
             Deposit
           </PrimaryButtonWrapper>
+
           <PrimaryButtonWrapper
             sx={{ type: 'outline' }}
-            onClick={handleWithdrawClick}
+            onClick={Number(stake) > 0 ? handleWithdrawClick : () => {}}
+            enabled={Number(stake) > 0}
           >
             Withdraw
           </PrimaryButtonWrapper>

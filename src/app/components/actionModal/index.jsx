@@ -11,7 +11,6 @@ import {
   depositTokenRequest,
   withdrawTokenRequest,
   exitTokenRequest,
-  getRewardRequest,
 } from '../../store/slices/web3';
 
 const ModalView = ({ className }) => {
@@ -31,15 +30,8 @@ const ModalView = ({ className }) => {
   const modalRef = useRef(null);
 
   const withdrawModal = type === ModalType.WITHDRAW;
-  const claimModal = type === ModalType.CLAIM;
 
   const [amount, setAmount] = useState('0.0');
-
-  useEffect(() => {
-    if (claimModal) {
-      setAmount(balance);
-    }
-  }, [claimModal, balance]);
 
   const handleModalClose = () => {
     setAmount('0.0');
@@ -56,8 +48,6 @@ const ModalView = ({ className }) => {
   const handleAction1Click = () => {
     if (withdrawModal) {
       dispatch(withdrawTokenRequest({ vault, amount, library }));
-    } else if (claimModal) {
-      dispatch(getRewardRequest({ vault, library }));
     } else {
       dispatch(depositTokenRequest({ vault, amount, library }));
     }
@@ -82,16 +72,12 @@ const ModalView = ({ className }) => {
             type="text"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            readOnly={claimModal}
           />
         </Modal.ContentContainer>
-        {!claimModal && (
-          <Modal.Note>
-            1% deposit fee used for the future liquidity. Based on your deposit
-            time there will be withdrawal fee not less then 1% for the same
-            purpose.
-          </Modal.Note>
-        )}
+        <Modal.Note>
+          Based on your deposit time there will be a withdrawal fee not less
+          than 1% that will be used for future liquidity.
+        </Modal.Note>
         <Modal.Action>
           <PrimaryButton
             enabled={Number(amount) > 0}

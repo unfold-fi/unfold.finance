@@ -6,7 +6,6 @@ import config from '../../../../config';
 export const ModalType = {
   DEPOSIT: 'Deposit',
   WITHDRAW: 'Withdraw',
-  CLAIM: 'Claim',
 };
 
 const initialState = {
@@ -26,10 +25,7 @@ const modalSlice = createSlice({
   reducers: {
     showModal(state, action) {
       const type = action.payload.type;
-      const symbol =
-        type === ModalType.CLAIM
-          ? config.Contracts.ERC20.tokenSymbol
-          : action.payload.symbol;
+      const symbol = action.payload.symbol;
 
       state.type = type;
       state.title = `${type} ${symbol}`;
