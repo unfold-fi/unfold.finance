@@ -6,15 +6,7 @@ const FooterComponent = () => (
   <Footer.Container>
     <Footer.SocRow>
       <SocialLink
-        href="https://github.com/unfold.fi"
-        title="Unfold Finance Github"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Github
-      </SocialLink>
-      <SocialLink
-        href="https://twitter.com/unfold.fi"
+        href="https://twitter.com/UnfoldFinance"
         title="Unfold Finance Twitter"
         target="_blank"
         rel="noopener noreferrer"
@@ -22,20 +14,12 @@ const FooterComponent = () => (
         Twitter
       </SocialLink>
       <SocialLink
-        href="https://t.me/unfold.fi"
+        href="https://t.me/unfoldfinance"
         title="Unfold Finance Telegram"
         target="_blank"
         rel="noopener noreferrer"
       >
         Telegram
-      </SocialLink>
-      <SocialLink
-        href="https://discord.com/unfold.fi"
-        title="Unfold Finance Discord"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Discord
       </SocialLink>
     </Footer.SocRow>
   </Footer.Container>

@@ -49,10 +49,17 @@ const HeaderComponent = () => {
             Connect Wallet
           </MobileConnectButton>
         )}
-        <MobileLink href="/docs">Documentation</MobileLink>
-        <MobileLink href="/docs">Governance</MobileLink>
-        <MobileLink href="/docs">Forum</MobileLink>
-        <MobileLink href="/docs">Rewards</MobileLink>
+        <MobileLink
+          href="https://docs.unfold.finance"
+          alt="Unfold Finance Documentation"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Documentation
+        </MobileLink>
+        <MobileLinkInternal to="/rewards" title="Unfold Rewards">
+          Rewards
+        </MobileLinkInternal>
       </MobileContainer>
     </MobileWrapper>
   );
@@ -65,10 +72,17 @@ const HeaderComponent = () => {
         </Link>
       </LogoWrapper>
       <NavigationWrapper>
-        <NavigationLink href="/docs">Documentation</NavigationLink>
-        <NavigationLink href="/docs">Governance</NavigationLink>
-        <NavigationLink href="/docs">Forum</NavigationLink>
-        <NavigationLink href="/docs">Rewards</NavigationLink>
+        <NavigationLink
+          href="https://docs.unfold.finance"
+          alt="Unfold Finance Documentation"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Documentation
+        </NavigationLink>
+        <NavigationLinkInternal to="/rewards" title="Unfold Rewards">
+          Rewards
+        </NavigationLinkInternal>
       </NavigationWrapper>
       {!account && (
         <ConnectButtonWrapper>
@@ -130,6 +144,11 @@ const NavigationLink = styled.a`
   padding: 10px 5px;
 `;
 
+const NavigationLinkInternal = styled(Link)`
+  display: block;
+  padding: 10px 5px;
+`;
+
 const ConnectButtonWrapper = styled.div`
   display: grid;
   justify-content: end;
@@ -150,9 +169,12 @@ const Profile = {
   `,
 
   Address: styled.div`
+    padding: 0.6875rem 1rem;
+    border: 1px solid ${CONSTANTS.primaryColor};
+    border-radius: 0.375rem;
     color: ${CONSTANTS.primaryColor};
-    font-size: 14px;
-    text-align: right;
+    font-size: 0.875rem;
+    cursor: pointer;
   `,
 };
 
@@ -208,6 +230,9 @@ const MobileConnectButton = styled(PrimaryButton)`
   margin-bottom: 0.625rem;
 `;
 const MobileLink = styled.a`
+  margin: 0.625rem 0;
+`;
+const MobileLinkInternal = styled(Link)`
   margin: 0.625rem 0;
 `;
 
