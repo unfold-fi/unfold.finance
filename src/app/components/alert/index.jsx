@@ -12,7 +12,7 @@ const AlertView = () => {
   return (
     <Container>
       {alerts.map((item) => (
-        <Alert alert={item} key={item.id} autoClose={false} />
+        <Alert alert={item} key={item.id} autoClose={true} />
       ))}
     </Container>
   );

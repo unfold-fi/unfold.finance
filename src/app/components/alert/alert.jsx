@@ -9,7 +9,7 @@ import config from '../../../config';
 const AlertComponent = ({
   alert,
   autoClose = true,
-  autoCloseTimeout = 3000,
+  autoCloseTimeout = 30000,
 }) => {
   const dispatch = useDispatch();
   const [closeTimerId, setCloseTimerId] = React.useState(null);
