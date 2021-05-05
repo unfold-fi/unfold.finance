@@ -1,5 +1,6 @@
 const CONSTANTS = {
   primaryColor: '#4B58DF',
+  primaryColorHover: '#3746E0',
 };
 
 const truncateAddress = (address, firstSegLength = 7, lastSegLength = 5) => {
