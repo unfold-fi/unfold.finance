@@ -1,33 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useWeb3React } from '@web3-react/core';
 
 import styled, { keyframes } from 'styled-components';
 
 import LogoImg from '../../assets/logo.png';
 
-import { truncateAddress, CONSTANTS } from '../../utils';
-
-import injectedConnector from '../../web3/connectors/injected';
-import { useEagerConnect, useInactiveListener } from '../../web3';
-import PrimaryButton from '../primaryButton';
+import ConnectButton from '../connectButton';
 
 const HeaderComponent = () => {
-  const dispatch = useDispatch();
-  const { account, activate, deactivate } = useWeb3React();
-
-  const triedEager = useEagerConnect();
-  useInactiveListener(!triedEager);
-
-  const handleConnectButtonClick = async () => {
-    if (account) {
-      deactivate();
-    } else {
-      await activate(injectedConnector);
-    }
-  };
-
   const mobileRef = useRef(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -38,17 +18,7 @@ const HeaderComponent = () => {
         onClick={() => setMobileOpen(!mobileOpen)}
       />
       <MobileContainer open={mobileOpen}>
-        {account && (
-          <Profile.Address>{truncateAddress(account)}</Profile.Address>
-        )}
-        {!account && (
-          <MobileConnectButton
-            sx={{ type: 'outline' }}
-            onClick={handleConnectButtonClick}
-          >
-            Connect Wallet
-          </MobileConnectButton>
-        )}
+        <ConnectButton mobile={true} />
         <MobileLink
           href="https://docs.unfold.finance"
           alt="Unfold Finance Documentation"
@@ -84,21 +54,7 @@ const HeaderComponent = () => {
           Rewards
         </NavigationLinkInternal>
       </NavigationWrapper>
-      {!account && (
-        <ConnectButtonWrapper>
-          <ConnectButton
-            sx={{ type: 'outline' }}
-            onClick={handleConnectButtonClick}
-          >
-            Connect Wallet
-          </ConnectButton>
-        </ConnectButtonWrapper>
-      )}
-      {account && (
-        <Profile.Wrapper>
-          <Profile.Address>{truncateAddress(account)}</Profile.Address>
-        </Profile.Wrapper>
-      )}
+      <ConnectButton mobile={false} />
       {MOBILE_MENU}
     </Container>
   );
@@ -149,35 +105,6 @@ const NavigationLinkInternal = styled(Link)`
   padding: 10px 5px;
 `;
 
-const ConnectButtonWrapper = styled.div`
-  display: grid;
-  justify-content: end;
-  align-content: center;
-  @media (max-width: 48rem) {
-    display: none;
-  }
-`;
-const ConnectButton = styled(PrimaryButton)``;
-
-const Profile = {
-  Wrapper: styled.div`
-    display: flex;
-    align-items: center;
-    @media (max-width: 48rem) {
-      display: none;
-    }
-  `,
-
-  Address: styled.div`
-    padding: 0.6875rem 1rem;
-    border: 1px solid ${CONSTANTS.primaryColor};
-    border-radius: 0.375rem;
-    color: ${CONSTANTS.primaryColor};
-    font-size: 0.875rem;
-    cursor: pointer;
-  `,
-};
-
 const MobileWrapper = styled.div`
   display: grid;
   align-content: center;
@@ -226,9 +153,6 @@ const MobileContainer = styled.div`
   animation: ${MobileContainerOnShown} 0.1s ease;
 `;
 
-const MobileConnectButton = styled(PrimaryButton)`
-  margin-bottom: 0.625rem;
-`;
 const MobileLink = styled.a`
   margin: 0.625rem 0;
 `;

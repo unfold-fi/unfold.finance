@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 
-import injectedConnector from './connectors/injected';
+import { injected } from './connectors';
 
 export const useEagerConnect = () => {
   const { activate, active } = useWeb3React();
@@ -9,16 +9,16 @@ export const useEagerConnect = () => {
   const [tried, setTried] = useState(false);
 
   useEffect(() => {
-    injectedConnector.isAuthorized().then((isAuthorized) => {
+    injected.isAuthorized().then((isAuthorized) => {
       if (isAuthorized) {
-        activate(injectedConnector, undefined, true).catch(() => {
+        activate(injected, undefined, true).catch(() => {
           setTried(true);
         });
       } else {
         setTried(true);
       }
     });
-  }, []);
+  }, [activate]);
 
   useEffect(() => {
     if (!tried && active) {
@@ -37,16 +37,16 @@ export const useInactiveListener = (suppress = false) => {
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleConnect = () => {
         console.log("Handling 'connect' event");
-        activate(injectedConnector);
+        activate(injected);
       };
       const handleChainChanged = (chainId) => {
         console.log("Handling 'chainChanged' event with payload", chainId);
-        activate(injectedConnector);
+        activate(injected);
       };
       const handleAccountsChanged = (accounts) => {
         console.log("Handling 'accountsChanged' event with payload", accounts);
         if (accounts.length > 0) {
-          activate(injectedConnector);
+          activate(injected);
         }
       };
 

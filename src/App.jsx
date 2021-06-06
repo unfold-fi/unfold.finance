@@ -15,7 +15,7 @@ import routes from './app/routes';
 import NotFound from './app/pages/404';
 import Header from './app/components/header';
 import Footer from './app/components/footer';
-import Modal from './app/components/actionModal';
+import ActionModal from './app/components/actionModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const App = () => {
     <>
       <Normalize />
       <GlobalStyle />
-      <ModalContainer />
+      <ActionModalContainer />
       <Wrapper>
         <Container>
           <AlertContainer>
@@ -155,6 +155,6 @@ const AlertContainer = styled.div`
   z-index: 2;
 `;
 
-const ModalContainer = styled(Modal)``;
+const ActionModalContainer = styled(ActionModal)``;
 
 export default App;
