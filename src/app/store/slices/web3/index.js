@@ -229,7 +229,6 @@ const vaults = config.Vaults.reduce((result, vault) => {
       balance: 0,
       reward: 0,
       approved: false,
-      logo: vault.logo,
     });
   }
   return result;
