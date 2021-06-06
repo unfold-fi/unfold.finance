@@ -5,7 +5,7 @@ import { useWeb3React } from '@web3-react/core';
 
 import styled, { keyframes } from 'styled-components';
 
-import LogoImg from '../../assets/logo.png';
+import LogoImg from '../../assets/Logo.svg';
 
 import { truncateAddress, CONSTANTS } from '../../utils';
 
@@ -87,7 +87,7 @@ const HeaderComponent = () => {
       {!account && (
         <ConnectButtonWrapper>
           <ConnectButton
-            sx={{ type: 'outline' }}
+            sx={{ type: 'outline', small: 'true' }}
             onClick={handleConnectButtonClick}
           >
             Connect Wallet
@@ -116,7 +116,7 @@ const Container = styled.header`
 `;
 
 const LogoWrapper = styled.div`
-  margin-top: -0.25rem;
+  margin-top: -0.125rem;
 `;
 
 const Logo = styled.img`
@@ -185,7 +185,7 @@ const MobileWrapper = styled.div`
   min-width: 1.5625rem;
   justify-content: end;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: none;
   }
 `;
@@ -195,7 +195,8 @@ const MobileIcon = styled.div`
     content: '${(p) => (!p.open ? '☰' : '⨯')}';
   }
 
-  font-size: ${(p) => (!p.open ? '18px' : '24px')};
+  font-size: ${(p) => (!p.open ? '1.875rem' : '2.125rem')};
+  font-weight: 700;
 
   cursor: pointer;
 `;

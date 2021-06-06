@@ -1,18 +1,38 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { useWeb3React } from '@web3-react/core';
 
 import VaultCard from '../../components/vault';
 
 import config from '../../../config';
+import injectedConnector from '../../web3/connectors/injected';
+import PrimaryButton from '../../components/primaryButton';
 
 const AppPage = () => {
+  const { account, activate, deactivate } = useWeb3React();
+  const handleConnectButtonClick = async () => {
+    if (account) {
+      deactivate();
+    } else {
+      await activate(injectedConnector);
+    }
+  };
   return (
     <Container>
       <Heading>Stake</Heading>
       <Vault.Grid>
-        {config.Vaults.map((vault, index) => {
-          return <VaultCard key={index} {...vault} />;
-        })}
+        {account &&
+          config.Vaults.map((vault, index) => {
+            return <VaultCard key={index} {...vault} />;
+          })}
+        {!account && (
+          <PrimaryButton
+            sx={{ type: 'outline', small: 'true' }}
+            onClick={handleConnectButtonClick}
+          >
+            Connect Wallet
+          </PrimaryButton>
+        )}
       </Vault.Grid>
     </Container>
   );
@@ -39,7 +59,7 @@ const Vault = {
     justify-content: space-between;
     @media (max-width: 59.625rem) {
       grid-template-columns: repeat(2, auto);
-      justify-content: space-evenly;
+      justify-content: space-between;
     }
     @media (max-width: 39.375rem) {
       grid-template-columns: unset;

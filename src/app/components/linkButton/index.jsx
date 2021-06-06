@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 import { CONSTANTS } from '../../utils';
 
-const StyledButton = styled.button`
+const StyledLinkButton = styled.a`
   box-sizing: border-box;
   padding: 0.6875rem 1rem;
 
   border: unset;
   border-radius: 0.375rem;
+  text-align: center;
+  text-decoration: none;
 
   ${(p) =>
     p.enabled &&
@@ -22,6 +24,10 @@ const StyledButton = styled.button`
   line-height: 1.25rem;
 
   min-width: 8.75rem;
+
+  &:hover {
+    text-decoration: none;
+  }
 
   ${(props) =>
     props.sx.type === 'outline' &&
@@ -75,21 +81,25 @@ const StyledButton = styled.button`
     `}
 `;
 
-const Button = (props) => {
-  const { sx, onClick, disabled, className, children, ...rest } = props;
+const LinkButton = (props) => {
+  const { sx, href, alt, target, rel, disabled, className, children, ...rest } =
+    props;
 
   return (
-    <StyledButton
+    <StyledLinkButton
       sx={sx}
-      onClick={onClick}
+      href={href}
+      alt={alt}
+      target={target}
+      rel={rel}
       className={className}
       enabled={!disabled}
       disabled={disabled}
       {...rest}
     >
       {children}
-    </StyledButton>
+    </StyledLinkButton>
   );
 };
 
-export default Button;
+export default LinkButton;

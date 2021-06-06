@@ -32,6 +32,7 @@ const Footer = {
     align-items: flex-start;
 
     box-sizing: border-box;
+    margin-top: 1.875rem;
     padding: 1.25rem 0 1.25rem 0;
     opacity: 0.8;
 
