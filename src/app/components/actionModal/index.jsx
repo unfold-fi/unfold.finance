@@ -56,7 +56,7 @@ const ModalView = ({ className }) => {
       <Modal.Container ref={modalRef}>
         <Modal.HeaderContainer>
           <Modal.Title>{title}</Modal.Title>
-          <Modal.Close onClick={handleModalClose}>&#10005;</Modal.Close>
+          <Modal.Close onClick={handleModalClose}>×</Modal.Close>
         </Modal.HeaderContainer>
         <Modal.ContentContainer>
           <Modal.Balance onClick={handleBalanceClick}>
@@ -120,13 +120,13 @@ const Modal = {
     display: flex;
     flex-direction: column;
 
-    width: 18.75rem;
-    height: 23.4375rem;
+    width: 248px;
+    height: 308px;
     border: 1px solid #e5e5df;
     border-radius: 0.375rem;
     background-color: white;
 
-    padding: 1.5625rem;
+    padding: 25px;
     justify-content: space-between;
   `,
   HeaderContainer: styled.div``,
@@ -137,9 +137,10 @@ const Modal = {
   `,
   Close: styled.div`
     position: absolute;
-    right: 0.625rem;
-    top: 0.625rem;
-    font-size: 1rem;
+    right: 24px;
+    top: 22px;
+    font-size: 20px;
+    font-weight: 500;
     cursor: pointer;
   `,
   ContentContainer: styled.div`
@@ -182,6 +183,7 @@ const Modal = {
     gap: 10px;
     && button {
       width: 100%;
+      min-width: auto;
     }
   `,
 };

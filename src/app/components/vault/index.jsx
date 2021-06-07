@@ -14,6 +14,7 @@ import { ModalType, showModal } from '../../store/slices/modal';
 const VaultView = ({
   className,
   name,
+  logo,
   desc,
   tokenSymbol,
   tokenAddress,
@@ -32,6 +33,7 @@ const VaultView = ({
 
   const vault = {
     name,
+    logo,
     tokenSymbol,
     tokenAddress,
     tokenAbi,
@@ -84,20 +86,23 @@ const VaultView = ({
   return (
     <Container className={className} $loading={loading}>
       <VaultCard.TextContainer>
-        <VaultCard.Title>{name}</VaultCard.Title>
+        <VaultCard.Title>
+          {vault.logo && <VaultCard.Logo src={vault.logo} />}
+          {name}
+        </VaultCard.Title>
         <VaultCard.Desc>{desc}</VaultCard.Desc>
       </VaultCard.TextContainer>
       <VaultCard.MetaContainer>
-        <VaultCard.Meta>APY: {toFixed(apy, 2)}%</VaultCard.Meta>
+        {/* <VaultCard.Meta>APY: {toFixed(apy, 2)}%</VaultCard.Meta> */}
         <VaultCard.Meta>
-          Locked: {toFixed(locked, 4)} {tokenSymbol}
+          Locked: {toFixed(locked, 2)} {tokenSymbol}
         </VaultCard.Meta>
         <VaultCard.Meta>
-          Your stake: {toFixed(stake, 4)} {tokenSymbol}
+          Your stake: {toFixed(stake, 2)} {tokenSymbol}
         </VaultCard.Meta>
         <VaultCard.RewardContainer>
           <VaultCard.RewardText>
-            Reward: {toFixed(reward, 4)} {config.Contracts.ERC20.tokenSymbol}
+            Reward: {toFixed(reward, 0)} {config.Contracts.ERC20.tokenSymbol}
           </VaultCard.RewardText>
           {Number(reward) > 0 && (
             <VaultCard.RewardButton onClick={handleClaimClick}>
@@ -168,6 +173,11 @@ const Container = styled.div`
   padding: 1.875rem;
   justify-content: space-between;
 
+  @media (max-width: 30rem) {
+    width: auto;
+    max-width: 100%;
+  }
+
   ${(props) =>
     props.$loading &&
     css`
@@ -178,8 +188,15 @@ const Container = styled.div`
 const VaultCard = {
   TextContainer: styled.div``,
   Title: styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
     font-size: 1.125rem;
     font-weight: 500;
+  `,
+  Logo: styled.img`
+    width: 32px;
+    height: 32px;
   `,
   Desc: styled.div`
     font-size: 0.875rem;
@@ -188,13 +205,16 @@ const VaultCard = {
   MetaContainer: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.125rem;
     flex-grow: 1;
     justify-content: flex-end;
   `,
 
   Meta: styled.div`
     font-size: 0.875rem;
+    @media (max-width: 48rem) {
+      font-size: 0.75rem;
+    }
   `,
 
   RewardContainer: styled.div`
@@ -208,6 +228,9 @@ const VaultCard = {
 
   RewardText: styled.div`
     font-size: 0.875rem;
+    @media (max-width: 48rem) {
+      font-size: 0.75rem;
+    }
   `,
 
   RewardButton: styled.div`

@@ -2,18 +2,25 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PrimaryButton from '../../components/primaryButton';
+import LinkButton from '../../components/linkButton';
 
 const IndexPage = () => (
   <Container>
     <Heading>
-      NFT assets collateralized lending and rent protocol on Ethereum
+      NFT assets collateralized lending and rent protocol on the Ethereum
     </Heading>
     <ButtonContainer>
-      <Link to="">
-        <PrimaryButton sx={{ type: 'outline' }}>Learn more</PrimaryButton>
-      </Link>
+      <LinkButton
+        sx={{ type: 'outline' }}
+        href="https://docs.unfold.finance"
+        alt="Unfold Finance Documentation"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn more
+      </LinkButton>
       <Link to="/rewards">
-        <PrimaryButton sx={{ type: 'solid' }}>Rewards</PrimaryButton>
+        <PrimaryButton sx={{ type: 'solid' }}>Enter App</PrimaryButton>
       </Link>
     </ButtonContainer>
   </Container>
@@ -36,6 +43,10 @@ const Heading = styled.h1`
   @media (max-width: 48rem) {
     font-size: 2.25rem;
     line-height: 2.5rem;
+  }
+  @media (max-width: 31.25rem) {
+    font-size: 1.6875rem;
+    line-height: 2rem;
   }
 `;
 const ButtonContainer = styled.div`
