@@ -5,18 +5,10 @@ import { useWeb3React } from '@web3-react/core';
 import VaultCard from '../../components/vault';
 
 import config from '../../../config';
-import injectedConnector from '../../web3/connectors/injected';
-import PrimaryButton from '../../components/primaryButton';
+import ConnectButton from '../../components/connectButton';
 
 const AppPage = () => {
-  const { account, activate, deactivate } = useWeb3React();
-  const handleConnectButtonClick = async () => {
-    if (account) {
-      deactivate();
-    } else {
-      await activate(injectedConnector);
-    }
-  };
+  const { account } = useWeb3React();
   return (
     <Container>
       <Heading>Stake</Heading>
@@ -25,14 +17,7 @@ const AppPage = () => {
           config.Vaults.map((vault, index) => {
             return <VaultCard key={index} {...vault} />;
           })}
-        {!account && (
-          <PrimaryButton
-            sx={{ type: 'outline', small: 'true' }}
-            onClick={handleConnectButtonClick}
-          >
-            Connect Wallet
-          </PrimaryButton>
-        )}
+        {!account && <ConnectButton mobile={false} />}
       </Vault.Grid>
     </Container>
   );
