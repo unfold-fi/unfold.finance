@@ -1,4 +1,6 @@
 const config = {
+  supportedChainIds: [1],
+  supportedChainName: 'Mainnet',
   EtherScanUri: 'https://etherscan.io',
   UniSwapUri: 'https://app.uniswap.org',
   Contracts: {
