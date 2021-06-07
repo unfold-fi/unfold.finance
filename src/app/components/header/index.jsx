@@ -6,6 +6,8 @@ import styled, { keyframes } from 'styled-components';
 import LogoImg from '../../assets/Logo.svg';
 
 import ConnectButton from '../connectButton';
+import IconClose from '../../assets/icons/icon-close-mobile.svg';
+import IconBurger from '../../assets/icons/icon-burger.svg';
 
 const HeaderComponent = () => {
   const mobileRef = useRef(null);
@@ -14,7 +16,7 @@ const HeaderComponent = () => {
   const MOBILE_MENU = (
     <MobileWrapper ref={mobileRef}>
       <MobileIcon
-        open={mobileOpen}
+        src={mobileOpen ? IconClose : IconBurger}
         onClick={() => setMobileOpen(!mobileOpen)}
       />
       <MobileContainer open={mobileOpen}>
@@ -117,14 +119,7 @@ const MobileWrapper = styled.div`
   }
 `;
 
-const MobileIcon = styled.div`
-  &:before {
-    content: '${(p) => (!p.open ? '☰' : '⨯')}';
-  }
-
-  font-size: ${(p) => (!p.open ? '1.875rem' : '2.125rem')};
-  font-weight: 700;
-
+const MobileIcon = styled.img`
   cursor: pointer;
 `;
 
