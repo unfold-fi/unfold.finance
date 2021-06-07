@@ -31,7 +31,9 @@ const ModalView = ({ className }) => {
     dispatch(closeModal());
   };
   useClickOutside(modalRef, () => {
-    handleModalClose();
+    if (open) {
+      handleModalClose();
+    }
   });
 
   const handleBalanceClick = () => {
