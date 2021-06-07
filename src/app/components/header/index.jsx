@@ -20,7 +20,7 @@ const HeaderComponent = () => {
         onClick={() => setMobileOpen(!mobileOpen)}
       />
       <MobileContainer open={mobileOpen}>
-        <ConnectButton mobile={true} />
+        <ConnectButton />
         <MobileLink
           href="https://docs.unfold.finance"
           alt="Unfold Finance Documentation"
@@ -56,7 +56,10 @@ const HeaderComponent = () => {
           Rewards
         </NavigationLinkInternal>
       </NavigationWrapper>
-      <ConnectButton mobile={false} />
+      <ConnectButtonWrapper>
+        <ConnectButton />
+      </ConnectButtonWrapper>
+
       {MOBILE_MENU}
     </Container>
   );
@@ -105,6 +108,12 @@ const NavigationLink = styled.a`
 const NavigationLinkInternal = styled(Link)`
   display: block;
   padding: 10px 5px;
+`;
+
+const ConnectButtonWrapper = styled.div`
+  @media (max-width: 48rem) {
+    display: none;
+  }
 `;
 
 const MobileWrapper = styled.div`

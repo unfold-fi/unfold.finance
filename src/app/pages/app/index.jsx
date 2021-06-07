@@ -17,7 +17,7 @@ const AppPage = () => {
           config.Vaults.map((vault, index) => {
             return <VaultCard key={index} {...vault} />;
           })}
-        {!account && <ConnectButton mobile={false} />}
+        {!account && <ConnectButton />}
       </Vault.Grid>
     </Container>
   );

@@ -9,7 +9,7 @@ import { truncateAddress, CONSTANTS } from '../../utils';
 import PrimaryButton from '../primaryButton';
 import { showModal } from '../../store/slices/connection';
 
-const ConnectButtonComponent = ({ className, mobile }) => {
+const ConnectButtonComponent = ({ className }) => {
   const dispatch = useDispatch();
 
   const { account } = useWeb3React();
@@ -18,22 +18,7 @@ const ConnectButtonComponent = ({ className, mobile }) => {
     dispatch(showModal());
   };
 
-  const MOBILE = (
-    <Wrapper className={className}>
-      {account && (
-        <Profile.Address onClick={handleClick}>
-          {truncateAddress(account)}
-        </Profile.Address>
-      )}
-      {!account && (
-        <MobileConnectButton sx={{ type: 'outline' }} onClick={handleClick}>
-          Connect Wallet
-        </MobileConnectButton>
-      )}
-    </Wrapper>
-  );
-
-  const DESKTOP = (
+  return (
     <Wrapper className={className}>
       {account && (
         <Profile.Wrapper>
@@ -44,15 +29,16 @@ const ConnectButtonComponent = ({ className, mobile }) => {
       )}
       {!account && (
         <ConnectButtonWrapper>
-          <ConnectButton sx={{ type: 'outline' }} onClick={handleClick}>
+          <ConnectButton
+            sx={{ type: 'outline', small: true }}
+            onClick={handleClick}
+          >
             Connect Wallet
           </ConnectButton>
         </ConnectButtonWrapper>
       )}
     </Wrapper>
   );
-
-  return mobile ? MOBILE : DESKTOP;
 };
 
 const Wrapper = styled.div``;
@@ -62,7 +48,7 @@ const ConnectButtonWrapper = styled.div`
   justify-content: end;
   align-content: center;
   @media (max-width: 48rem) {
-    display: none;
+    margin-bottom: 0.625rem;
   }
 `;
 const ConnectButton = styled(PrimaryButton)``;
@@ -71,9 +57,6 @@ const Profile = {
   Wrapper: styled.div`
     display: flex;
     align-items: center;
-    @media (max-width: 48rem) {
-      display: none;
-    }
   `,
 
   Address: styled.div`
@@ -85,9 +68,5 @@ const Profile = {
     cursor: pointer;
   `,
 };
-
-const MobileConnectButton = styled(PrimaryButton)`
-  margin-bottom: 0.625rem;
-`;
 
 export default ConnectButtonComponent;
