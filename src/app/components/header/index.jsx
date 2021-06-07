@@ -29,7 +29,13 @@ const HeaderComponent = () => {
         >
           Documentation
         </MobileLink>
-        <MobileLinkInternal to="/rewards" title="Unfold Rewards">
+        <MobileLinkInternal
+          to="/rewards"
+          onClick={() => {
+            setMobileOpen(false);
+          }}
+          title="Unfold Rewards"
+        >
           Rewards
         </MobileLinkInternal>
       </MobileContainer>
@@ -39,7 +45,13 @@ const HeaderComponent = () => {
   return (
     <Container>
       <LogoWrapper>
-        <Link to="/" title="Unfold Finance">
+        <Link
+          to="/"
+          title="Unfold Finance"
+          onClick={() => {
+            setMobileOpen(false);
+          }}
+        >
           <Logo src={LogoImg} />
         </Link>
       </LogoWrapper>
