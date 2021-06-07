@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styled, { keyframes } from 'styled-components';
 

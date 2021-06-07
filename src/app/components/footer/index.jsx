@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const FooterComponent = () => (
   <Footer.Container>
@@ -68,17 +67,6 @@ const Footer = {
 
   TermsOfService: styled.div``,
 };
-const LinkWrapper = styled(Link)`
-  && {
-    line-height: 150%;
-    font-size: 0.75rem;
-    color: #808080;
-
-    @media (max-width: 48rem) {
-      font-size: 0.5rem;
-    }
-  }
-`;
 
 const SocialLink = styled.a`
   && {

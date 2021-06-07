@@ -42,7 +42,7 @@ const VaultView = ({
   };
 
   const { vaults, loading } = useSelector((state) => state.web3);
-  const { account, library } = useWeb3React();
+  const { library } = useWeb3React();
 
   if (enabled) {
     const vaultState = vaults[name];
@@ -142,13 +142,6 @@ const VaultView = ({
     </Container>
   );
 };
-
-const Shown = keyframes`
-  from { 
-    opacity: 0;
-    transform: translateX(-0.625rem);
-  }
-`;
 
 const pulse = keyframes`
   0% {
