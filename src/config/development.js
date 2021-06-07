@@ -1,5 +1,6 @@
 const config = {
-  networks: [42, 97],
+  supportedChainIds: [42],
+  supportedChainName: 'Kovan',
   EtherScanUri: 'https://kovan.etherscan.io',
   UniSwapUri: 'https://app.uniswap.org',
   Contracts: {

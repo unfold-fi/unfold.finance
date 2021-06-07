@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 
 import {
@@ -18,22 +18,17 @@ import MetamaskIcon from '../../assets/metamask-fox.png';
 import WalletConnectIcon from '../../assets/walletconnect-circle-blue.png';
 
 import { useClickOutside } from '../../hooks';
-import Networks from '../../web3/connectors/networks.json';
+import { closeModal } from '../../store/slices/connection';
+import { showError } from '../../store/slices/alert';
+import config from '../../../config';
 
-const ConnectModalView = ({ className, open, onClose }) => {
-  const {
-    connector,
-    library,
-    chainId,
-    account,
-    active,
-    activate,
-    deactivate,
-    error,
-  } = useWeb3React();
+const ConnectModalView = ({ className }) => {
+  const { connector, active, activate, deactivate, error } = useWeb3React();
+
+  const { modalOpen } = useSelector((state) => state.connection);
 
   const dispatch = useDispatch();
-  const modalRef = useRef(null);
+  const connectionModalRef = useRef(null);
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState();
@@ -49,24 +44,14 @@ const ConnectModalView = ({ className, open, onClose }) => {
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector);
 
-  useClickOutside(modalRef, () => {
-    onClose();
+  useClickOutside(connectionModalRef, () => {
+    if (modalOpen) {
+      dispatch(closeModal());
+    }
   });
 
-  const getErrorMessage = (error) => {
-    if (error instanceof NoEthereumProviderError) {
-      return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.';
-    } else if (error instanceof UnsupportedChainIdError) {
-      return "You're connected to an unsupported network.";
-    } else if (
-      error instanceof UserRejectedRequestErrorInjected ||
-      error instanceof UserRejectedRequestErrorWalletConnect
-    ) {
-      return 'Please authorize this website to access your Ethereum account.';
-    } else {
-      console.error(error);
-      return 'An unknown error occurred. Check the console for more details.';
-    }
+  const handleCloseModalClick = () => {
+    dispatch(closeModal());
   };
 
   const connectors = [
@@ -88,70 +73,47 @@ const ConnectModalView = ({ className, open, onClose }) => {
     }
   };
 
-  const handleSwitchClick = async () => {
-    if (active) {
-      try {
-        console.log(chainId);
-        console.log(library.provider);
-        library.provider._handleChainChanged({
-          chainId: chainId === 1 ? toHex(42) : toHex(1),
-          networkVersion: chainId === 1 ? '42' : '1',
-        });
-      } catch (error) {
-        console.error(error);
-      }
+  // Error handling
+  const getErrorMessage = (error) => {
+    if (error instanceof NoEthereumProviderError) {
+      return 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.';
+    } else if (error instanceof UnsupportedChainIdError) {
+      return `You're connected to an unsupported network. Please switch network to ${
+        config.supportedChainName || 'Mainnet'
+      }.`;
+    } else if (
+      error instanceof UserRejectedRequestErrorInjected ||
+      error instanceof UserRejectedRequestErrorWalletConnect
+    ) {
+      return 'Please authorize this website to access your Ethereum account.';
+    } else {
+      console.error(error);
+      return 'An unknown error occurred. Check the console for more details.';
     }
   };
 
-  const toHex = (num) => {
-    return '0x' + num.toString(16);
-  };
+  useEffect(() => {
+    if (error) {
+      deactivate();
+      dispatch(showError(getErrorMessage(error)));
+    }
+  }, [deactivate, dispatch, error]);
 
-  const addNetwork = (chain) => {
-    const params = {
-      chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
-      chainName: chain.name,
-      nativeCurrency: {
-        name: chain.nativeCurrency.name,
-        symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-        decimals: chain.nativeCurrency.decimals,
-      },
-      rpcUrls: chain.rpc,
-      blockExplorerUrls: [
-        chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url
-          ? chain.explorers[0].url
-          : chain.infoURL,
-      ],
-    };
-
-    library.provider
-      .request({
-        method: 'wallet_addEthereumChain',
-        params: [params, account],
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
-    <Backdrop className={className} show={open}>
-      <Modal.Container ref={modalRef}>
+    <Backdrop className={className} show={modalOpen}>
+      <Modal.Container ref={connectionModalRef}>
         <Modal.HeaderContainer>
           <Modal.Title>Connect Wallet</Modal.Title>
-          <Modal.Close onClick={onClose}>&#10005;</Modal.Close>
+          <Modal.Close onClick={handleCloseModalClick}>&#10005;</Modal.Close>
         </Modal.HeaderContainer>
         <Modal.ContentContainer>
           {connectors.map((item) => {
             const currentConnector = item.connector;
             const activating = currentConnector === activatingConnector;
             const connected = currentConnector === connector;
-            const disabled =
-              !triedEager || !!activatingConnector || connected || !!error;
             return (
               <Connector.Wrapper
+                connected={connected}
                 key={item.name}
                 onClick={() => {
                   setActivatingConnector(currentConnector);
@@ -169,25 +131,15 @@ const ConnectModalView = ({ className, open, onClose }) => {
                 <Connector.Status>
                   {connected && (
                     <span role="img" aria-label="check">
-                      ✅
+                      ✔️
                     </span>
                   )}
                 </Connector.Status>
               </Connector.Wrapper>
             );
           })}
-          <Connector.Wrapper onClick={() => addNetwork(Networks[5])}>
-            <Connector.Title>Add BSC Network</Connector.Title>
-          </Connector.Wrapper>
         </Modal.ContentContainer>
         <Modal.Action>
-          <SwitchButton
-            sx={{ type: 'outline' }}
-            onClick={handleSwitchClick}
-            disabled={!active}
-          >
-            Switch Network
-          </SwitchButton>
           <DisconnectButton
             sx={{ type: 'outline' }}
             onClick={handleDisconnectClick}
@@ -271,6 +223,8 @@ const Connector = {
     display: flex;
     padding: 0.625rem 1.25rem;
     border: 1px solid #e5e5df;
+    ${(prop) =>
+      prop.connected ? `border-color: green;` : `border-color: #e5e5df;`}
     border-radius: 0.375rem;
     align-items: center;
     gap: 1.25rem;
@@ -287,6 +241,5 @@ const Connector = {
 };
 
 const DisconnectButton = styled(PrimaryButton)``;
-const SwitchButton = styled(PrimaryButton)``;
 
 export default ConnectModalView;

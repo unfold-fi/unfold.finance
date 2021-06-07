@@ -16,6 +16,7 @@ import NotFound from './app/pages/404';
 import Header from './app/components/header';
 import Footer from './app/components/footer';
 import ActionModal from './app/components/actionModal';
+import ConnectModal from './app/components/connectModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const App = () => {
       <Normalize />
       <GlobalStyle />
       <ActionModalContainer />
+      <ConnectModalContainer />
       <Wrapper>
         <Container>
           <AlertContainer>
@@ -152,9 +154,10 @@ const AlertContainer = styled.div`
   @media (max-width: 48rem) {
     width: 100%;
   }
-  z-index: 2;
+  z-index: 20;
 `;
 
 const ActionModalContainer = styled(ActionModal)``;
+const ConnectModalContainer = styled(ConnectModal)``;
 
 export default App;

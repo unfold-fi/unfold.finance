@@ -14,15 +14,8 @@ import {
 } from '../../store/slices/web3';
 
 const ModalView = ({ className }) => {
-  const {
-    open,
-    type,
-    title,
-    vault,
-    balance,
-    action1Text,
-    action2Text,
-  } = useSelector((state) => state.modal);
+  const { open, type, title, vault, balance, action1Text, action2Text } =
+    useSelector((state) => state.modal);
 
   const { library } = useWeb3React();
 
@@ -38,7 +31,9 @@ const ModalView = ({ className }) => {
     dispatch(closeModal());
   };
   useClickOutside(modalRef, () => {
-    handleModalClose();
+    if (open) {
+      handleModalClose();
+    }
   });
 
   const handleBalanceClick = () => {

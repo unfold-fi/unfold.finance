@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
 
@@ -7,28 +7,19 @@ import styled from 'styled-components';
 import { truncateAddress, CONSTANTS } from '../../utils';
 
 import PrimaryButton from '../primaryButton';
-import ConnectModal from '../connectModal';
+import { showModal } from '../../store/slices/connection';
 
 const ConnectButtonComponent = ({ className, mobile }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const { account } = useWeb3React();
 
   const handleClick = async () => {
-    setModalOpen(true);
-    // if (account) {
-    //   deactivate();
-    // } else {
-    //   await activate(injectedConnector);
-    // }
-  };
-  const handleModalClose = () => {
-    setModalOpen(false);
+    dispatch(showModal());
   };
 
   const MOBILE = (
-    <>
-      <ConnectModal open={modalOpen} onClose={handleModalClose} />
+    <Wrapper className={className}>
       {account && (
         <Profile.Address onClick={handleClick}>
           {truncateAddress(account)}
@@ -39,12 +30,11 @@ const ConnectButtonComponent = ({ className, mobile }) => {
           Connect Wallet
         </MobileConnectButton>
       )}
-    </>
+    </Wrapper>
   );
 
   const DESKTOP = (
-    <>
-      <ConnectModal open={modalOpen} onClose={handleModalClose} />
+    <Wrapper className={className}>
       {account && (
         <Profile.Wrapper>
           <Profile.Address onClick={handleClick}>
@@ -59,11 +49,13 @@ const ConnectButtonComponent = ({ className, mobile }) => {
           </ConnectButton>
         </ConnectButtonWrapper>
       )}
-    </>
+    </Wrapper>
   );
 
   return mobile ? MOBILE : DESKTOP;
 };
+
+const Wrapper = styled.div``;
 
 const ConnectButtonWrapper = styled.div`
   display: grid;
