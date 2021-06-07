@@ -21,6 +21,7 @@ import { useClickOutside } from '../../hooks';
 import { closeModal } from '../../store/slices/connection';
 import { showError } from '../../store/slices/alert';
 import config from '../../../config';
+import IconClose from '../../assets/icons/icon-close-modal.svg';
 
 const ConnectModalView = ({ className }) => {
   const { connector, active, activate, deactivate, error } = useWeb3React();
@@ -104,7 +105,9 @@ const ConnectModalView = ({ className }) => {
       <Modal.Container ref={connectionModalRef}>
         <Modal.HeaderContainer>
           <Modal.Title>Connect Wallet</Modal.Title>
-          <Modal.Close onClick={handleCloseModalClick}>&#10005;</Modal.Close>
+          <Modal.Close onClick={handleCloseModalClick}>
+            <IconImage src={IconClose} alt="Close" />
+          </Modal.Close>
         </Modal.HeaderContainer>
         <Modal.ContentContainer>
           {connectors.map((item) => {
@@ -194,9 +197,8 @@ const Modal = {
   `,
   Close: styled.div`
     position: absolute;
-    right: 0.625rem;
-    top: 0.625rem;
-    font-size: 1rem;
+    right: 24px;
+    top: 20px;
     cursor: pointer;
   `,
   ContentContainer: styled.div`
@@ -241,5 +243,6 @@ const Connector = {
 };
 
 const DisconnectButton = styled(PrimaryButton)``;
+const IconImage = styled.img``;
 
 export default ConnectModalView;

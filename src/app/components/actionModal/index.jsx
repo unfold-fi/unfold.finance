@@ -12,6 +12,7 @@ import {
   withdrawTokenRequest,
   exitTokenRequest,
 } from '../../store/slices/web3';
+import IconClose from '../../assets/icons/icon-close-modal.svg';
 
 const ModalView = ({ className }) => {
   const { open, type, title, vault, balance, action1Text, action2Text } =
@@ -56,7 +57,9 @@ const ModalView = ({ className }) => {
       <Modal.Container ref={modalRef}>
         <Modal.HeaderContainer>
           <Modal.Title>{title}</Modal.Title>
-          <Modal.Close onClick={handleModalClose}>×</Modal.Close>
+          <Modal.Close onClick={handleModalClose}>
+            <IconImage src={IconClose} alt="Close" />
+          </Modal.Close>
         </Modal.HeaderContainer>
         <Modal.ContentContainer>
           <Modal.Balance onClick={handleBalanceClick}>
@@ -138,9 +141,7 @@ const Modal = {
   Close: styled.div`
     position: absolute;
     right: 24px;
-    top: 22px;
-    font-size: 20px;
-    font-weight: 500;
+    top: 20px;
     cursor: pointer;
   `,
   ContentContainer: styled.div`
@@ -187,5 +188,7 @@ const Modal = {
     }
   `,
 };
+
+const IconImage = styled.img``;
 
 export default ModalView;

@@ -2,9 +2,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { close } from '../../store/slices/alert';
-import { Item, Close, Message } from './styles';
+import { Item, Close, Message, IconImage } from './styles';
 
 import config from '../../../config';
+import IconClose from '../../assets/icons/icon-close-modal.svg';
 
 const AlertComponent = ({
   alert,
@@ -49,7 +50,9 @@ const AlertComponent = ({
           </Message.Link>
         )}
       </Message.Container>
-      <Close onClick={() => dispatch(close(alert.id))}>✕</Close>
+      <Close onClick={() => dispatch(close(alert.id))}>
+        <IconImage src={IconClose} alt="Close" />
+      </Close>
     </Item>
   );
 };

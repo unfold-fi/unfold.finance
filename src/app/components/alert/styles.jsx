@@ -46,14 +46,9 @@ export const Message = {
 
 export const Close = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 0.1875rem;
+  top: 3px;
+  right: 10px;
   cursor: pointer;
-  font-size: 1rem;
 `;
+
+export const IconImage = styled.img``;
