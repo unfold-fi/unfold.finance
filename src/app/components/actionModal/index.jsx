@@ -147,18 +147,19 @@ const Modal = {
   ContentContainer: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
     flex-grow: 1;
     justify-content: center;
     margin-bottom: 1.875rem;
   `,
   Balance: styled.div`
+    margin-top: 12px;
     font-size: 0.875rem;
     color: #8c8ea0;
     text-align: right;
     cursor: pointer;
   `,
   Input: styled.input`
+    margin-top: 12px;
     background: #f1f1ee;
     border-radius: 6px;
     font-size: 18px;
@@ -181,8 +182,9 @@ const Modal = {
 
   Action: styled.div`
     display: flex;
-    gap: 10px;
+    margin-left: -10px;
     && button {
+      margin-left: 10px;
       width: 100%;
       min-width: auto;
     }

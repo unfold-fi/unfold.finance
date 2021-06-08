@@ -32,11 +32,7 @@ const IndexPage = () => (
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
   justify-content: center;
-  @media (max-width: 48rem) {
-    gap: 0.625rem;
-  }
 `;
 const Heading = styled.h1`
   font-size: 3.5rem;
@@ -55,7 +51,14 @@ const Heading = styled.h1`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 1.5rem;
+  margin-top: 1.25rem;
+  margin-left: -1.5rem;
+  @media (max-width: 48rem) {
+    margin-top: 0.625rem;
+  }
+  && a {
+    margin-left: 1.5rem;
+  }
 `;
 
 export default IndexPage;

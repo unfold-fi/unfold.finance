@@ -185,12 +185,12 @@ const VaultCard = {
   TextContainer: styled.div``,
   Title: styled.div`
     display: flex;
-    gap: 10px;
     align-items: center;
     font-size: 1.125rem;
     font-weight: 500;
   `,
   Logo: styled.img`
+    margin-right: 10px;
     width: 32px;
     height: 32px;
   `,
@@ -201,38 +201,36 @@ const VaultCard = {
   MetaContainer: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.125rem;
     flex-grow: 1;
     justify-content: flex-end;
   `,
 
   Meta: styled.div`
+    margin-top: 7px;
     font-size: 0.875rem;
   `,
 
   RewardContainer: styled.div`
+    margin-top: 5px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin-bottom: 1.875rem;
-    gap: 0.625rem;
     align-items: center;
   `,
 
   RewardText: styled.div`
     font-size: 0.875rem;
-    @media (max-width: 48rem) {
-      font-size: 0.75rem;
-    }
   `,
 
   RewardButton: styled.div`
     background: #0e1239;
     color: white;
-    padding: 0.125rem 0.25rem;
+    padding: 1px 4px;
     border-radius: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 500;
+    margin-left: 8px;
     cursor: pointer;
   `,
 };
@@ -240,10 +238,11 @@ const VaultCard = {
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 0.625rem;
+  margin-left: -0.625rem;
 `;
 
 const PrimaryButtonWrapper = styled(PrimaryButton)`
+  margin-left: 0.625rem;
   min-width: unset;
   flex: 1 1 0;
 `;

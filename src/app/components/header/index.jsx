@@ -104,8 +104,6 @@ const Logo = styled.img`
 
 const NavigationWrapper = styled.nav`
   display: flex;
-  gap: 2.5rem;
-  margin-left: 2.5rem;
 
   @media (max-width: 48rem) {
     display: none;
@@ -113,11 +111,13 @@ const NavigationWrapper = styled.nav`
 `;
 
 const NavigationLink = styled.a`
+  margin-left: 2.5rem;
   display: block;
   padding: 10px 5px;
 `;
 
 const NavigationLinkInternal = styled(Link)`
+  margin-left: 2.5rem;
   display: block;
   padding: 10px 5px;
 `;

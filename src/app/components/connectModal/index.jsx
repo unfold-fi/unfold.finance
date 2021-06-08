@@ -205,8 +205,7 @@ const Modal = {
   ContentContainer: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    padding-top: 1.875rem;
+    padding-top: 10px;
     flex-grow: 1;
     justify-content: start;
     margin-bottom: 1.875rem;
@@ -214,7 +213,6 @@ const Modal = {
 
   Action: styled.div`
     display: flex;
-    gap: 10px;
     && button {
       width: 100%;
     }
@@ -223,6 +221,7 @@ const Modal = {
 
 const Connector = {
   Wrapper: styled.div`
+    margin-top: 20px;
     display: flex;
     padding: 0.625rem 1.25rem;
     border: 1px solid ${CONSTANTS.primaryColor};
@@ -232,7 +231,6 @@ const Connector = {
         : `border-color: ${CONSTANTS.primaryColor};`}
     border-radius: 0.375rem;
     align-items: center;
-    gap: 1.25rem;
     cursor: pointer;
   `,
   Icon: styled.img`
@@ -241,6 +239,7 @@ const Connector = {
   `,
   Title: styled.div`
     flex-grow: 1;
+    margin-left: 1.25rem;
     color: ${CONSTANTS.primaryColor};
   `,
   Status: styled.div``,
