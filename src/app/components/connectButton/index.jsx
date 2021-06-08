@@ -44,12 +44,12 @@ const ConnectButtonComponent = ({ className }) => {
 const Wrapper = styled.div``;
 
 const ConnectButtonWrapper = styled.div`
-  display: grid;
+  /* display: grid;
   justify-content: end;
   align-content: center;
   @media (max-width: 48rem) {
     margin-bottom: 0.625rem;
-  }
+  } */
 `;
 const ConnectButton = styled(PrimaryButton)``;
 

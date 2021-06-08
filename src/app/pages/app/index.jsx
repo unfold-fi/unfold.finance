@@ -61,10 +61,16 @@ const NotificationWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 1.875rem 0;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 const Text = styled.div`
   margin-left: 1rem;
-  font-size: 1.1rem;
+  @media (max-width: 500px) {
+    margin-left: unset;
+    margin-top: 1rem;
+  }
 `;
 
 export default AppPage;
