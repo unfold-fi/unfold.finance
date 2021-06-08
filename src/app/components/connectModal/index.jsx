@@ -22,6 +22,7 @@ import { closeModal } from '../../store/slices/connection';
 import { showError } from '../../store/slices/alert';
 import config from '../../../config';
 import IconClose from '../../assets/icons/icon-close-modal.svg';
+import { CONSTANTS } from '../../utils';
 
 const ConnectModalView = ({ className }) => {
   const { connector, active, activate, deactivate, error } = useWeb3React();
@@ -134,7 +135,7 @@ const ConnectModalView = ({ className }) => {
                 <Connector.Status>
                   {connected && (
                     <span role="img" aria-label="check">
-                      ✔️
+                      ✓
                     </span>
                   )}
                 </Connector.Status>
@@ -180,13 +181,13 @@ const Modal = {
     display: flex;
     flex-direction: column;
 
-    width: 18.75rem;
-    height: 23.4375rem;
+    width: 248px;
+    height: 308px;
     border: 1px solid #e5e5df;
     border-radius: 0.375rem;
     background-color: white;
 
-    padding: 1.5625rem;
+    padding: 25px;
     justify-content: space-between;
   `,
   HeaderContainer: styled.div``,
@@ -224,9 +225,11 @@ const Connector = {
   Wrapper: styled.div`
     display: flex;
     padding: 0.625rem 1.25rem;
-    border: 1px solid #e5e5df;
+    border: 1px solid ${CONSTANTS.primaryColor};
     ${(prop) =>
-      prop.connected ? `border-color: green;` : `border-color: #e5e5df;`}
+      prop.connected
+        ? `border-color: #BEC3F3;`
+        : `border-color: ${CONSTANTS.primaryColor};`}
     border-radius: 0.375rem;
     align-items: center;
     gap: 1.25rem;
@@ -238,6 +241,7 @@ const Connector = {
   `,
   Title: styled.div`
     flex-grow: 1;
+    color: ${CONSTANTS.primaryColor};
   `,
   Status: styled.div``,
 };

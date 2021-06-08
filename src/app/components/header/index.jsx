@@ -89,7 +89,7 @@ const Container = styled.header`
 `;
 
 const LogoWrapper = styled.div`
-  margin-top: -0.125rem;
+  margin-top: -2px;
 `;
 
 const Logo = styled.img`

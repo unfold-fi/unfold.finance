@@ -7,7 +7,11 @@ import LinkButton from '../../components/linkButton';
 const IndexPage = () => (
   <Container>
     <Heading>
-      NFT assets collateralized lending and rent protocol on the Ethereum
+      NFT assets collateralized
+      <br />
+      lending and rent protocol
+      <br />
+      on the Ethereum
     </Heading>
     <ButtonContainer>
       <LinkButton

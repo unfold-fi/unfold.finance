@@ -97,7 +97,7 @@ const config = {
       vaultAddress: '0xea0144115c9F722f26963aCC6d564Cee8Bd77F76',
       vaultAbi: '',
       enabled: false,
-      logo: '/images/vaults/cryptopunks.png',
+      logo: '/images/vaults/cryptopunks.svg',
     },
   ],
 };

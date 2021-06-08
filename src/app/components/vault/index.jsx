@@ -30,6 +30,7 @@ const VaultView = ({
   let balance = 0;
   let reward = 0;
   let approved = false;
+  const isNft = desc.includes('NFT');
 
   const vault = {
     name,
@@ -95,10 +96,12 @@ const VaultView = ({
       <VaultCard.MetaContainer>
         {/* <VaultCard.Meta>APY: {toFixed(apy, 2)}%</VaultCard.Meta> */}
         <VaultCard.Meta>
-          Locked: {toFixed(locked, 2)} {tokenSymbol}
+          Locked: {isNft ? toFixed(locked, 0) : toFixed(locked, 2)}{' '}
+          {tokenSymbol}
         </VaultCard.Meta>
         <VaultCard.Meta>
-          Your stake: {toFixed(stake, 2)} {tokenSymbol}
+          Your stake: {isNft ? toFixed(stake, 0) : toFixed(stake, 2)}{' '}
+          {tokenSymbol}
         </VaultCard.Meta>
         <VaultCard.RewardContainer>
           <VaultCard.RewardText>
@@ -205,9 +208,6 @@ const VaultCard = {
 
   Meta: styled.div`
     font-size: 0.875rem;
-    @media (max-width: 48rem) {
-      font-size: 0.75rem;
-    }
   `,
 
   RewardContainer: styled.div`
