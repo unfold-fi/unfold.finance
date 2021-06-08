@@ -12,12 +12,16 @@ const AppPage = () => {
   return (
     <Container>
       <Heading>Stake</Heading>
+      {!account && (
+        <NotificationWrapper>
+          <ConnectButton />
+          <Text>Connect your wallet to see vaults details</Text>
+        </NotificationWrapper>
+      )}
       <Vault.Grid>
-        {account &&
-          config.Vaults.map((vault, index) => {
-            return <VaultCard key={index} {...vault} />;
-          })}
-        {!account && <ConnectButton />}
+        {config.Vaults.map((vault, index) => {
+          return <VaultCard key={index} {...vault} />;
+        })}
       </Vault.Grid>
     </Container>
   );
@@ -51,5 +55,16 @@ const Vault = {
     }
   `,
 };
+
+const NotificationWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1.875rem 0;
+`;
+const Text = styled.div`
+  margin-left: 1rem;
+  font-size: 1.1rem;
+`;
 
 export default AppPage;
